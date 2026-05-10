@@ -1,0 +1,7 @@
+node_modules/
+dist/
+
+# Environment & API keys (never commit real secrets)
+.env
+.env.*
+!.env.example

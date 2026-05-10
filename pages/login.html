@@ -15,10 +15,24 @@
         <a href="./leaderboard.html">Leaderboard</a>
     </nav>
 
+    <div class="voice-agent-wrap" id="voice-agent-root">
+        <div class="voice-agent-panel" id="voice-agent-panel" aria-hidden="true">
+            <div class="voice-agent-panel-header">
+                <span class="voice-agent-panel-title">Voice agent</span>
+                <button type="button" class="voice-agent-panel-close" id="voice-agent-close" aria-label="Close chat">×</button>
+            </div>
+            <div class="voice-agent-messages" id="voice-agent-messages" aria-live="polite"></div>
+        </div>
+        <button type="button" class="voice-agent-fab" id="voice-agent-trigger" aria-label="Open voice agent" aria-pressed="false" aria-expanded="false" aria-controls="voice-agent-panel">
+            <img src="../assets/images/voice%20agent.png" alt="" width="120" height="120" decoding="async">
+        </button>
+    </div>
+
     <script src="../js/supabase.js"></script>
     <script src="../js/helpers.js"></script>
     <script src="../questions/questions.js"></script>
     <script src="../js/script.js"></script>
+    <script type="module" src="/js/voice-agent.js"></script>
 </body>
 </html>
 
