@@ -4,12 +4,16 @@
  * Setup: copy `.env.example` to `.env`, set `VITE_GROQ_API_KEY`, then run
  * `npm run dev` or `npm run build`. Keys are injected at build/dev time by Vite.
  * Direct browser calls to Groq may be blocked by CORS; use a backend proxy if needed.
+ *
+ * Run `npm run dev` (Vite) so `import.meta.env` is defined. Opening the HTML file
+ * directly will load the script but leave the API key empty unless you use a build.
  */
-const GROQ_API_KEY = import.meta.env.VITE_GROQ_API_KEY ?? "";
+const env = import.meta.env ?? {};
+const GROQ_API_KEY = String(env.VITE_GROQ_API_KEY ?? "").trim();
 const GROQ_MODEL =
-  import.meta.env.VITE_GROQ_MODEL ?? "llama-3.1-8b-instant";
+  env.VITE_GROQ_MODEL ?? "llama-3.1-8b-instant";
 const GROQ_URL =
-  import.meta.env.VITE_GROQ_API_URL ??
+  env.VITE_GROQ_API_URL ??
   "https://api.groq.com/openai/v1/chat/completions";
 
 (function () {
@@ -93,7 +97,7 @@ const GROQ_URL =
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${GROQ_API_KEY.trim()}`,
+        Authorization: `Bearer ${GROQ_API_KEY}`,
       },
       body: JSON.stringify({
         model: GROQ_MODEL,
@@ -154,11 +158,11 @@ const GROQ_URL =
       );
       return;
     }
-    if (!GROQ_API_KEY.trim()) {
+    if (!GROQ_API_KEY) {
       openPanel();
       appendMessage(
         "system",
-        "Add VITE_GROQ_API_KEY to your .env file (see .env.example)."
+        "Add your Groq key: put VITE_GROQ_API_KEY in a `.env` file, then run `npm run dev` (restart the dev server after editing .env)."
       );
       return;
     }
