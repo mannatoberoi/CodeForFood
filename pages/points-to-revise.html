@@ -3,17 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard | Code For Food</title>
+    <title>Points to revise | Code For Food</title>
     <link rel="stylesheet" href="../css/style.css">
 </head>
-<body>
-    <h1>Dashboard</h1>
-    <nav>
-        <a href="../index.html">Home</a>
-        <a href="./login.html">Login</a>
-        <a href="./game.html">Game</a>
-        <a href="./leaderboard.html">Leaderboard</a>
-    </nav>
+<body class="revise-page">
+    <a href="./game.html" class="dashboard-back" aria-label="Back to game">
+        <img src="../assets/images/back%20button.png" alt="" width="112" height="112" decoding="async">
+    </a>
+
+    <div class="revise-panel-actions" aria-label="Revise options">
+        <a href="#" class="revise-panel-btn revise-panel-btn--1" aria-label="Revise for my exam">
+            <img src="../assets/images/revise%20button%201.png" alt="" width="96" height="48" decoding="async">
+        </a>
+        <a href="#" class="revise-panel-btn revise-panel-btn--2" aria-label="Quick points to revise">
+            <img src="../assets/images/revise%20button%202.png" alt="" width="118" height="59" decoding="async">
+        </a>
+        <a href="#" class="revise-panel-btn revise-panel-btn--3" aria-label="Topics you might need to read again">
+            <img src="../assets/images/revise%20button%203.png" alt="" width="96" height="48" decoding="async">
+        </a>
+    </div>
 
     <div class="voice-agent-wrap" id="voice-agent-root">
         <div class="voice-agent-panel" id="voice-agent-panel" aria-hidden="true">
@@ -35,4 +43,3 @@
     <script type="module" src="../js/voice-agent.js"></script>
 </body>
 </html>
-

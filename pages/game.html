@@ -6,14 +6,39 @@
     <title>Game | Code For Food</title>
     <link rel="stylesheet" href="../css/style.css">
 </head>
-<body>
-    <h1>Game</h1>
-    <nav>
-        <a href="../index.html">Home</a>
-        <a href="./login.html">Login</a>
-        <a href="./dashboard.html">Dashboard</a>
-        <a href="./leaderboard.html">Leaderboard</a>
-    </nav>
+<body class="game-page" data-page="game">
+    <main class="game-stage" id="game-stage" aria-label="Game">
+        <a href="../index.html" class="game-back-home" aria-label="Back to home">
+            <img
+                src="../assets/images/Back%20to%20Home%20cutout.png"
+                alt=""
+                width="360"
+                height="203"
+                decoding="async"
+                fetchpriority="high">
+        </a>
+
+        <div class="game-quiz-grid" aria-label="Available quizzes">
+            <a href="./js-quiz-q1.html" class="game-quiz-slot game-quiz-slot--1" aria-label="Basics of JS Quiz">
+                <img src="../assets/images/Basics%20of%20JS%20Quiz.png" alt="" width="220" height="126" decoding="async">
+            </a>
+        </div>
+
+        <nav class="game-dash-nav" aria-label="Quiz dashboard">
+            <a href="./rewards.html" class="game-dash-btn game-dash-btn--rewards">
+                <img src="../assets/images/my%20rewards%20button.png" alt="My rewards" width="655" height="169" decoding="async">
+            </a>
+            <a href="./points-to-revise.html" class="game-dash-btn game-dash-btn--revise">
+                <img src="../assets/images/Points%20to%20Revise.png" alt="Points to revise" width="680" height="175" decoding="async">
+            </a>
+            <a href="./leaderboard.html" class="game-dash-btn game-dash-btn--leaderboard">
+                <img src="../assets/images/leaderboard.png" alt="Leaderboard" width="640" height="165" decoding="async">
+            </a>
+            <a href="./login.html" class="game-dash-btn game-dash-btn--login">
+                <img src="../assets/images/LOGIN.png" alt="Log in" width="640" height="165" decoding="async">
+            </a>
+        </nav>
+    </main>
 
     <div class="voice-agent-wrap" id="voice-agent-root">
         <div class="voice-agent-panel" id="voice-agent-panel" aria-hidden="true">
@@ -35,4 +60,3 @@
     <script type="module" src="../js/voice-agent.js"></script>
 </body>
 </html>
-

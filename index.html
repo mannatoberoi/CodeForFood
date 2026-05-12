@@ -6,28 +6,32 @@
     <title>CODE FOR FOOD!!!!</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
-<body>
-    <header class="site-header">
-        <h1>Code For Food</h1>
-        <nav>
-            <a href="pages/login.html">Login</a>
-            <a href="pages/dashboard.html">Dashboard</a>
-            <a href="pages/game.html">Game</a>
-            <a href="pages/leaderboard.html">Leaderboard</a>
-        </nav>
-    </header>
-
+<body data-page="home">
     <section class="hero" aria-label="Welcome">
         <video class="section-video" autoplay muted loop playsinline preload="metadata">
             <source src="assets/videos/homepage.mp4" type="video/mp4">
         </video>
+        <header class="site-header">
+            <h1>Code For Food</h1>
+            <nav>
+                <a href="pages/login.html">Login</a>
+                <a href="pages/rewards.html">Rewards</a>
+                <a href="pages/game.html">Game</a>
+                <a href="pages/leaderboard.html">Leaderboard</a>
+            </nav>
+        </header>
     </section>
 
     <section class="about" id="about" aria-label="About">
-        <video class="section-video" autoplay muted loop playsinline preload="metadata">
-            <source src="assets/videos/about-section-video.mp4" type="video/mp4">
-        </video>
+        <div class="about-sticky-media">
+            <video class="section-video" autoplay muted loop playsinline preload="metadata">
+                <source src="assets/videos/about-section-video.mp4" type="video/mp4">
+            </video>
+        </div>
     </section>
+
+    <!-- Scroll deep past About → white light → /pages/game.html -->
+    <div id="portal-flash" class="portal-flash" aria-hidden="true"></div>
 
     <div class="voice-agent-wrap" id="voice-agent-root">
         <div class="voice-agent-panel" id="voice-agent-panel" aria-hidden="true">

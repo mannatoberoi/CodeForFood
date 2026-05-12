@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Basics of JS Quiz — Question 1 | Code For Food</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body class="js-quiz-q1-page">
+    <h1 class="js-quiz-q1-sr-only">Question 1: What is the correct way to declare a variable in JavaScript?</h1>
+
+    <a href="./game.html" class="dashboard-back" aria-label="Back to quiz dashboard">
+        <img src="../assets/images/back%20button.png" alt="" width="112" height="112" decoding="async">
+    </a>
+
+    <div class="js-quiz-q1-options" id="js-quiz-q1-options" role="group" aria-label="Answer choices">
+        <button type="button" class="js-quiz-q1-opt js-quiz-q1-opt--a" data-option="a" aria-label="Option A">
+            <img src="../assets/images/BQ1O1.png" alt="" width="400" height="144" decoding="async">
+        </button>
+        <button type="button" class="js-quiz-q1-opt js-quiz-q1-opt--b" data-option="b" aria-label="Option B">
+            <img src="../assets/images/BQ1O2.png" alt="" width="400" height="144" decoding="async">
+        </button>
+        <button type="button" class="js-quiz-q1-opt js-quiz-q1-opt--c" data-option="c" aria-label="Option C">
+            <img src="../assets/images/BQ1O3.png" alt="" width="400" height="144" decoding="async">
+        </button>
+        <button type="button" class="js-quiz-q1-opt js-quiz-q1-opt--d" data-option="d" aria-label="Option D">
+            <img src="../assets/images/BQ1O4.png" alt="" width="400" height="144" decoding="async">
+        </button>
+    </div>
+
+    <div class="js-quiz-q1-result-overlays" aria-hidden="true">
+        <div class="js-quiz-q1-wrong-reveal">
+            <img
+                src="../assets/images/BQ1O3.png"
+                alt="Correct answer: let x = 5"
+                width="400"
+                height="144"
+                decoding="async">
+        </div>
+        <div class="js-quiz-q1-correct-reward">
+            <img
+                src="../assets/images/BURGER.png"
+                alt="Your reward"
+                width="200"
+                height="200"
+                decoding="async">
+        </div>
+    </div>
+
+    <div class="voice-agent-wrap" id="voice-agent-root">
+        <div class="voice-agent-panel" id="voice-agent-panel" aria-hidden="true">
+            <div class="voice-agent-panel-header">
+                <span class="voice-agent-panel-title">Voice agent</span>
+                <button type="button" class="voice-agent-panel-close" id="voice-agent-close" aria-label="Close chat">×</button>
+            </div>
+            <div class="voice-agent-messages" id="voice-agent-messages" aria-live="polite"></div>
+        </div>
+        <button type="button" class="voice-agent-fab" id="voice-agent-trigger" aria-label="Open voice agent" aria-pressed="false" aria-expanded="false" aria-controls="voice-agent-panel">
+            <img src="../assets/images/voice%20agent.png" alt="" width="64" height="64" decoding="async">
+        </button>
+    </div>
+
+    <script src="../js/supabase.js"></script>
+    <script src="../js/helpers.js"></script>
+    <script src="../questions/questions.js"></script>
+    <script src="../js/script.js"></script>
+    <script type="module" src="../js/voice-agent.js"></script>
+    <script src="../js/js-quiz-q1.js"></script>
+</body>
+</html>

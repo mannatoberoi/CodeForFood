@@ -12,12 +12,195 @@ body {
     scroll-behavior: smooth;
 }
 
+/* pages/rewards.html — My Rewards room illustration */
+body.rewards-page {
+    position: relative;
+    min-height: 100vh;
+    background-color: #3d3428;
+    background-image: url("../assets/images/myrewardbg.png");
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+
+/* pages/points-to-revise.html — full-bleed scene art */
+body.revise-page {
+    position: relative;
+    min-height: 100vh;
+    margin: 0;
+    background-color: #2d2419;
+    background-image: url("../assets/images/Points%20to%20Revise%20BG.png");
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    color: #f5f5f5;
+}
+
+/* Dashboard — wooden back tile over background (top-left) */
+.dashboard-back {
+    position: absolute;
+    top: 0;
+    left: clamp(0.62rem, 2.15vmin, 1.12rem);
+    z-index: 50;
+    display: block;
+    line-height: 0;
+    text-decoration: none;
+    transform: translateY(-2px);
+    transition: transform 0.2s ease;
+}
+
+.dashboard-back:hover,
+.dashboard-back:focus-visible {
+    transform: translateY(-2px) scale(1.06);
+}
+
+.dashboard-back:focus-visible {
+    outline: 3px solid #4fc3f7;
+    outline-offset: 4px;
+    border-radius: 4px;
+}
+
+.dashboard-back img {
+    display: block;
+    width: min(112px, min(16vw, 22vh));
+    height: auto;
+    transition: filter 0.2s ease;
+}
+
+.dashboard-back:hover img,
+.dashboard-back:focus-visible img {
+    filter:
+        drop-shadow(0 0 5px rgba(141, 110, 99, 0.9))
+        drop-shadow(0 0 12px rgba(93, 64, 55, 0.55))
+        drop-shadow(0 0 20px rgba(62, 39, 35, 0.35));
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .dashboard-back {
+        transition: none;
+        transform: none;
+    }
+
+    .dashboard-back:hover,
+    .dashboard-back:focus-visible {
+        transform: none;
+    }
+
+    .dashboard-back img {
+        transition: none;
+    }
+}
+
+/* pages/points-to-revise.html — back tile slightly lower than default */
+body.revise-page .dashboard-back {
+    top: clamp(0.42rem, 1.35vmin, 0.7rem);
+}
+
+/* pages/points-to-revise.html — PNG arrow tiles over the three panel buttons (tune left/top %) */
+.revise-panel-actions {
+    position: absolute;
+    inset: 0;
+    z-index: 40;
+    pointer-events: none;
+}
+
+.revise-panel-actions > * {
+    pointer-events: auto;
+}
+
+.revise-panel-btn {
+    position: absolute;
+    display: block;
+    line-height: 0;
+    text-decoration: none;
+    transform: translate(-50%, -50%);
+    transition: transform 0.2s ease;
+}
+
+.revise-panel-btn:focus-visible {
+    outline: 3px solid #4fc3f7;
+    outline-offset: 4px;
+    border-radius: 6px;
+    z-index: 45;
+}
+
+.revise-panel-btn:hover,
+.revise-panel-btn:focus-visible {
+    transform: translate(-50%, -50%) scale(1.08);
+}
+
+.revise-panel-btn img {
+    display: block;
+    width: min(96px, min(11vw, 13vh));
+    height: auto;
+    transition: filter 0.2s ease;
+}
+
+/* Slightly larger than the other two */
+.revise-panel-btn--2 img {
+    width: min(118px, min(13.8vw, 15.8vh));
+}
+
+.revise-panel-btn--1:hover img,
+.revise-panel-btn--1:focus-visible img {
+    filter:
+        drop-shadow(0 0 8px rgba(129, 199, 132, 0.95))
+        drop-shadow(0 0 18px rgba(56, 142, 60, 0.55))
+        drop-shadow(0 0 28px rgba(46, 125, 50, 0.45));
+}
+
+.revise-panel-btn--2:hover img,
+.revise-panel-btn--2:focus-visible img {
+    filter:
+        drop-shadow(0 0 8px rgba(79, 195, 247, 0.95))
+        drop-shadow(0 0 18px rgba(33, 150, 243, 0.55))
+        drop-shadow(0 0 28px rgba(25, 118, 210, 0.45));
+}
+
+.revise-panel-btn--3:hover img,
+.revise-panel-btn--3:focus-visible img {
+    filter:
+        drop-shadow(0 0 8px rgba(186, 104, 255, 0.9))
+        drop-shadow(0 0 18px rgba(156, 39, 176, 0.55))
+        drop-shadow(0 0 28px rgba(171, 71, 188, 0.45));
+}
+
+.revise-panel-btn--1 {
+    left: 26%;
+    top: 88%;
+}
+
+.revise-panel-btn--2 {
+    left: 49.8%;
+    top: 88.5%;
+}
+
+.revise-panel-btn--3 {
+    left: 72.5%;
+    top: 88%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .revise-panel-btn {
+        transition: none;
+    }
+
+    .revise-panel-btn:hover,
+    .revise-panel-btn:focus-visible {
+        transform: translate(-50%, -50%);
+    }
+
+    .revise-panel-btn img {
+        transition: none;
+    }
+}
+
 .site-header {
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
-    z-index: 2;
+    z-index: 10;
     display: flex;
     flex-wrap: wrap;
     align-items: center;
@@ -63,8 +246,9 @@ body {
 
 .about {
     position: relative;
-    min-height: min(100vh, 900px);
-    overflow: hidden;
+    /* Sticky video stays on screen while this section scrolls; extra height = portal runway */
+    min-height: calc(min(100vh, 900px) + 280vh);
+    overflow: visible;
     background-color: #3d3428;
     background-image: url("../assets/images/minecraft about background.png");
     background-size: cover;
@@ -72,13 +256,21 @@ body {
     background-repeat: no-repeat;
 }
 
-<<<<<<< HEAD
-/* Voice agent — bottom-right FAB + chat panel */
+.about-sticky-media {
+    position: sticky;
+    top: 0;
+    height: min(100vh, 900px);
+    overflow: hidden;
+}
+
+/* Voice agent — fixed bottom-right FAB + chat panel (inset from edge) */
 .voice-agent-wrap {
     position: fixed;
     bottom: 1.25rem;
-    right: 1.75rem;
+    right: clamp(1.25rem, 5vw, 2.75rem);
     left: auto;
+    width: fit-content;
+    max-width: min(360px, calc(100vw - 2.5rem));
     z-index: 1000;
     display: flex;
     flex-direction: column;
@@ -288,7 +480,7 @@ body {
     border: none;
     padding: 0.25rem 0.5rem;
 }
-=======
+
 .section-video {
     position: absolute;
     inset: 0;
@@ -298,4 +490,510 @@ body {
     object-fit: cover;
     pointer-events: none;
 }
->>>>>>> ba818a9 (videos added)
+
+/* Home: white flash then navigate to game (see js/script.js) */
+.portal-flash {
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    background: #fff;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition:
+        opacity 0.5s ease-in,
+        visibility 0s linear 0.5s;
+}
+
+.portal-flash.is-active {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transition: opacity 0.45s ease-in;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .portal-flash,
+    .portal-flash.is-active {
+        transition-duration: 0.08s;
+    }
+}
+
+/* Lock viewport — no scroll on game dashboard */
+html:has(body.game-page) {
+    overflow: hidden;
+}
+
+/* Real game shell (pages/game.html) — quiz dashboard art as full-page background */
+.game-page {
+    height: 100vh;
+    height: 100dvh;
+    max-height: 100vh;
+    max-height: 100dvh;
+    min-height: 0;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    overscroll-behavior: none;
+    background-color: #1a1510;
+    background-image: url("../assets/images/dashboard.png");
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    color: #f0f0f0;
+}
+
+.game-page .game-stage {
+    position: relative;
+    height: 100%;
+    min-height: 0;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background: transparent;
+}
+
+html:has(body.js-quiz-q1-page) {
+    overflow: hidden;
+}
+
+/* pages/js-quiz-q1.html — question art as full-viewport background (no scroll) */
+body.js-quiz-q1-page {
+    height: 100vh;
+    height: 100dvh;
+    max-height: 100vh;
+    max-height: 100dvh;
+    margin: 0;
+    overflow: hidden;
+    overscroll-behavior: none;
+    position: relative;
+    background-color: #2d2419;
+    background-image: url("../assets/images/question1.png");
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    color: #f5f5f5;
+}
+
+.js-quiz-q1-sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* pages/js-quiz-q1.html — voice FAB top-right, smaller; panel opens below */
+body.js-quiz-q1-page .voice-agent-wrap {
+    top: clamp(0.5rem, 2vmin, 1rem);
+    bottom: auto;
+    right: clamp(0.75rem, 3vw, 1.5rem);
+    left: auto;
+    flex-direction: column-reverse;
+    align-items: flex-end;
+}
+
+body.js-quiz-q1-page .voice-agent-fab img {
+    width: min(64px, min(16vw, 14vh));
+}
+
+/* Question 1 — four answer tiles over question1.png (2×2: A B / C D); C = correct */
+.js-quiz-q1-options {
+    position: absolute;
+    inset: 0;
+    z-index: 44;
+    pointer-events: none;
+}
+
+.js-quiz-q1-options > * {
+    pointer-events: auto;
+}
+
+.js-quiz-q1-opt {
+    position: absolute;
+    padding: 0;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    line-height: 0;
+    transform: translate(-50%, -50%);
+    transition: transform 0.18s ease;
+    border-radius: 6px;
+}
+
+.js-quiz-q1-opt:hover,
+.js-quiz-q1-opt:focus-visible {
+    transform: translate(-50%, -50%) scale(1.05);
+}
+
+.js-quiz-q1-opt:focus-visible {
+    outline: 3px solid #ffc107;
+    outline-offset: 3px;
+    z-index: 46;
+}
+
+.js-quiz-q1-opt img {
+    display: block;
+    width: min(400px, min(44vw, 52vh));
+    height: auto;
+}
+
+/* Tune % vs question1.png + cover */
+.js-quiz-q1-opt--a {
+    left: 29%;
+    top: 62%;
+}
+
+.js-quiz-q1-opt--b {
+    left: 71%;
+    top: 62%;
+}
+
+.js-quiz-q1-opt--c {
+    left: 29%;
+    top: 84.5%;
+}
+
+.js-quiz-q1-opt--d {
+    left: 72%;
+    top: 84%;
+}
+
+body.js-quiz-q1-page--answered .js-quiz-q1-options {
+    visibility: hidden;
+    pointer-events: none;
+}
+
+body.js-quiz-q1-page.js-quiz-q1-page--result-correct {
+    background-image: url("../assets/images/correctans.png");
+}
+
+body.js-quiz-q1-page.js-quiz-q1-page--result-wrong {
+    background-image: url("../assets/images/wrongans.png");
+}
+
+/* Result screens — correct option strip on wrong bg; burger on correct bg (tune top %) */
+.js-quiz-q1-result-overlays {
+    position: absolute;
+    inset: 0;
+    z-index: 45;
+    pointer-events: none;
+}
+
+.js-quiz-q1-wrong-reveal,
+.js-quiz-q1-correct-reward {
+    display: none;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    line-height: 0;
+}
+
+body.js-quiz-q1-page--result-wrong .js-quiz-q1-wrong-reveal {
+    display: block;
+    top: 66%;
+}
+
+body.js-quiz-q1-page--result-correct .js-quiz-q1-correct-reward {
+    display: block;
+    top: 67.5%;
+}
+
+.js-quiz-q1-wrong-reveal img {
+    display: block;
+    width: min(380px, min(42vw, 46vh));
+    height: auto;
+}
+
+.js-quiz-q1-correct-reward img {
+    display: block;
+    width: min(220px, min(30vmin, 38vw));
+    height: auto;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .js-quiz-q1-opt {
+        transition: none;
+    }
+
+    .js-quiz-q1-opt:hover,
+    .js-quiz-q1-opt:focus-visible {
+        transform: translate(-50%, -50%);
+    }
+}
+
+/* pages/game.html — first slot in 2×2 “Available quizzes” board (tune left/top % vs dashboard.png + cover) */
+.game-quiz-grid {
+    position: absolute;
+    inset: 0;
+    z-index: 42;
+    pointer-events: none;
+}
+
+.game-quiz-grid > * {
+    pointer-events: auto;
+}
+
+.game-quiz-slot {
+    position: absolute;
+    display: block;
+    line-height: 0;
+    text-decoration: none;
+    transform: translate(-50%, -50%);
+    transition: transform 0.2s ease;
+}
+
+.game-quiz-slot:focus-visible {
+    outline: 3px solid #ffc107;
+    outline-offset: 4px;
+    border-radius: 8px;
+    z-index: 43;
+}
+
+.game-quiz-slot:hover,
+.game-quiz-slot:focus-visible {
+    transform: translate(-50%, -50%) scale(1.04);
+}
+
+.game-quiz-slot img {
+    display: block;
+    width: min(190px, min(20vw, 22vh));
+    height: auto;
+    border-radius: 4px;
+}
+
+.game-quiz-slot--1 {
+    left: 29%;
+    top: 48%;
+}
+
+/*
+ * Game page — “Back to Home” sign (pages/game.html)
+ * Position: `.game-back-home` — anchor from top/left of `#game-stage` (same file as dashboard buttons).
+ *   • Move up / down → change `top` (smaller = higher on screen). The `- 1.15rem` nudges from the clamp base.
+ *   • Move left / right → change `left`.
+ * Size: `.game-back-home img` → change `width` min(...) values (first number = max width in px; vw/vh = responsive caps).
+ * Hover size: `.game-back-home:hover` → `transform: scale(...)`.
+ */
+.game-back-home {
+    position: absolute;
+    top: calc(clamp(0.5rem, 2.5vmin, 1.25rem) - 1.15rem);
+    left: calc(clamp(0.5rem, 2.5vmin, 1.25rem) - 1.15rem);
+    z-index: 50;
+    display: block;
+    line-height: 0;
+    text-decoration: none;
+    transform-origin: top left;
+    transition: transform 0.22s ease;
+}
+
+.game-back-home:hover,
+.game-back-home:focus-visible {
+    transform: scale(1.01);
+}
+
+.game-back-home:active {
+    transform: scale(1.03);
+}
+
+.game-back-home:focus-visible {
+    outline: 3px solid #4fc3f7;
+    outline-offset: 4px;
+    border-radius: 4px;
+}
+
+.game-back-home img {
+    display: block;
+    width: min(360px, min(46vw, 58vh));
+    height: auto;
+    /* Black backing reads as transparent over the illustrated dashboard */
+    mix-blend-mode: screen;
+    transition: filter 0.22s ease;
+}
+
+.game-back-home:hover img,
+.game-back-home:focus-visible img {
+    filter:
+        drop-shadow(0 0 10px rgba(186, 104, 255, 0.95))
+        drop-shadow(0 0 22px rgba(156, 39, 176, 0.55))
+        drop-shadow(0 0 34px rgba(171, 71, 188, 0.4));
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .game-back-home {
+        transition: none;
+    }
+
+    .game-back-home:hover,
+    .game-back-home:focus-visible,
+    .game-back-home:active {
+        transform: none;
+    }
+
+    .game-back-home img {
+        transition: none;
+    }
+}
+
+/*
+ * Game page — clickable PNGs aligned ON TOP of the painted buttons in `dashboard.png` (background-size: cover).
+ * Each `.game-dash-btn--*` has its own `top` / `right` — tweak % until the interactive layer covers the matching art.
+ * Shared horizontal inset → `.game-dash-btn { right: ... }`. Vertical anchor → `top` + `translateY(-50%)` per variant.
+ * Button size → leaderboard/login, revise, and rewards each have their own `width` (see `.game-dash-btn--* img`).
+ */
+.game-dash-nav {
+    position: absolute;
+    inset: 0;
+    z-index: 45;
+    pointer-events: none;
+}
+
+.game-dash-nav > * {
+    pointer-events: auto;
+}
+
+.game-dash-btn {
+    position: absolute;
+    right: clamp(0rem, 1.2vw, 0.65rem);
+    display: block;
+    line-height: 0;
+    text-decoration: none;
+    transform: translateY(-50%);
+    transform-origin: center right;
+    transition: transform 0.22s ease;
+    z-index: 5;
+}
+
+/* Tune these % values so each link sits over its twin in the Cyber Café dashboard illustration */
+.game-dash-btn--rewards {
+    top: 27.95%;
+    right: clamp(1.06rem, 2.98vw, 1.78rem);
+}
+
+.game-dash-btn--revise {
+    top: 45.5%;
+    right: clamp(1.72rem, 4.35vw, 2.55rem);
+}
+
+.game-dash-btn--leaderboard {
+    top: 62%;
+    /* Larger `right` than default → further left on screen */
+    right: clamp(0.98rem, 2.85vw, 1.68rem);
+}
+
+.game-dash-btn--login {
+    top: 75%;
+    /* Larger `right` than siblings → sits left of the other buttons (toward center) */
+    right: clamp(1.1rem, 4vw, 2.25rem);
+}
+
+.game-dash-btn:hover,
+.game-dash-btn:focus-visible {
+    z-index: 15;
+    transform: translateY(-50%) scale(1.06);
+}
+
+.game-dash-btn:active {
+    transform: translateY(-50%) scale(1.02);
+}
+
+.game-dash-btn:focus-visible {
+    outline-width: 3px;
+    outline-offset: 3px;
+    border-radius: 6px;
+}
+
+.game-dash-btn--rewards:focus-visible {
+    outline: 3px solid #b388ff;
+}
+
+.game-dash-btn--revise:focus-visible {
+    outline: 3px solid #42a5f5;
+}
+
+.game-dash-btn--leaderboard:focus-visible {
+    outline: 3px solid #66bb6a;
+}
+
+.game-dash-btn--login:focus-visible {
+    outline: 3px solid #ef5350;
+}
+
+/* Leaderboard + Login: base scale. Revise: largest of the pair. Rewards: slightly smaller than Revise. */
+.game-dash-btn img {
+    display: block;
+    height: auto;
+    transition: filter 0.22s ease;
+}
+
+.game-dash-btn--leaderboard img,
+.game-dash-btn--login img {
+    width: min(640px, min(58vw, 52vh));
+}
+
+.game-dash-btn--rewards img {
+    width: min(655px, min(59vw, 54vh));
+}
+
+.game-dash-btn--revise img {
+    width: min(680px, min(61vw, 56vh));
+}
+
+.game-dash-btn--rewards:hover img,
+.game-dash-btn--rewards:focus-visible img {
+    filter:
+        drop-shadow(0 0 8px rgba(186, 104, 255, 0.85))
+        drop-shadow(0 0 18px rgba(156, 39, 176, 0.5))
+        drop-shadow(0 0 28px rgba(171, 71, 188, 0.35));
+}
+
+.game-dash-btn--revise:hover img,
+.game-dash-btn--revise:focus-visible img {
+    filter:
+        drop-shadow(0 0 8px rgba(79, 195, 247, 0.95))
+        drop-shadow(0 0 18px rgba(33, 150, 243, 0.55))
+        drop-shadow(0 0 30px rgba(25, 118, 210, 0.4));
+}
+
+.game-dash-btn--leaderboard:hover img,
+.game-dash-btn--leaderboard:focus-visible img {
+    filter:
+        drop-shadow(0 0 8px rgba(129, 199, 132, 0.95))
+        drop-shadow(0 0 18px rgba(56, 142, 60, 0.55))
+        drop-shadow(0 0 28px rgba(46, 125, 50, 0.45));
+}
+
+.game-dash-btn--login:hover img,
+.game-dash-btn--login:focus-visible img {
+    filter:
+        drop-shadow(0 0 8px rgba(255, 82, 82, 0.95))
+        drop-shadow(0 0 18px rgba(244, 67, 54, 0.6))
+        drop-shadow(0 0 28px rgba(211, 47, 47, 0.5));
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .game-dash-btn {
+        transition: none;
+    }
+
+    .game-dash-btn:hover,
+    .game-dash-btn:focus-visible,
+    .game-dash-btn:active {
+        transform: translateY(-50%);
+    }
+
+    .game-dash-btn img {
+        transition: none;
+    }
+}
+
+/* Game page only: voice agent bottom-left (dashboard art has UI on the right) */
+.game-page .voice-agent-wrap {
+    right: auto;
+    left: clamp(1.25rem, 5vw, 2.75rem);
+    align-items: flex-start;
+}
