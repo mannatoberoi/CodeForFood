@@ -197,7 +197,7 @@ const GROQ_URL =
       setListening(false);
     };
     recognition.onresult = async (event) => {
-      const transcript = event.results[0][0].transcript.trim();
+      const transcript = event.results[0][0].transcript.trim().toLowerCase();
       if (!transcript) {
         appendMessage(
           "system",
@@ -206,6 +206,29 @@ const GROQ_URL =
         return;
       }
       appendMessage("user", transcript);
+
+      var navUrl = null;
+      if (/go\s*(back|to\s*home)/i.test(transcript) || transcript === "home" || transcript === "back") {
+        navUrl = new URL("../index.html", window.location.href).href;
+      } else if (/game/i.test(transcript) && !/rewards|leaderboard|login|revise/i.test(transcript)) {
+        navUrl = new URL("./game.html", window.location.href).href;
+      } else if (/reward/i.test(transcript)) {
+        navUrl = new URL("./rewards.html", window.location.href).href;
+      } else if (/leaderboard/i.test(transcript) || /leader.?board/i.test(transcript)) {
+        navUrl = new URL("./leaderboard.html", window.location.href).href;
+      } else if (/login/i.test(transcript) || /sign.?in/i.test(transcript) || /log.?in/i.test(transcript)) {
+        navUrl = new URL("./login.html", window.location.href).href;
+      } else if (/revise/i.test(transcript) || /point/i.test(transcript)) {
+        navUrl = new URL("./points-to-revise.html", window.location.href).href;
+      }
+
+      if (navUrl) {
+        appendMessage("assistant", "Navigating…");
+        speak("Navigating");
+        window.location.assign(navUrl);
+        return;
+      }
+
       processing = true;
       setThinking(true);
       try {

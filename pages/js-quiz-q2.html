@@ -3,47 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Basics of JS Quiz — Question 1 | Code For Food</title>
+    <title>Basics of JS Quiz — Question 2 | Code For Food</title>
     <link rel="stylesheet" href="../css/style.css">
 </head>
-<body class="js-quiz-q1-page">
-    <h1 class="js-quiz-q1-sr-only">Question 1: What is the correct way to declare a variable in JavaScript?</h1>
+<body class="js-quiz-q2-page">
+    <h1 class="js-quiz-q2-sr-only">Question 2: What is the correct way to declare a variable in JavaScript?</h1>
 
     <a href="./game.html" class="dashboard-back" aria-label="Back to quiz dashboard">
+        <img
+            src="../assets/images/back%20button.png"
+            alt=""
+            width="112"
+            height="112"
+            decoding="async">
+    </a>
+
+    <a href="./js-quiz-q3.html" class="dashboard-forward js-quiz-q2-forward" aria-label="Next question">
         <img src="../assets/images/back%20button.png" alt="" width="112" height="112" decoding="async">
     </a>
 
-    <a href="./js-quiz-q2.html" class="dashboard-forward js-quiz-q1-forward" aria-label="Next question">
-        <img src="../assets/images/back%20button.png" alt="" width="112" height="112" decoding="async">
-    </a>
-
-    <div class="js-quiz-q1-options" id="js-quiz-q1-options" role="group" aria-label="Answer choices">
-        <button type="button" class="js-quiz-q1-opt js-quiz-q1-opt--a" data-option="a" aria-label="Option A">
-            <img src="../assets/images/BQ1O1.png" alt="" width="400" height="144" decoding="async">
+    <div class="js-quiz-q2-options" id="js-quiz-q2-options" role="group" aria-label="Answer choices">
+        <button type="button" class="js-quiz-q2-opt js-quiz-q2-opt--a" data-option="a" aria-label="Option A">
+            <img src="../assets/images/BQ2O1.png" alt="" width="400" height="144" decoding="async">
         </button>
-        <button type="button" class="js-quiz-q1-opt js-quiz-q1-opt--b" data-option="b" aria-label="Option B">
-            <img src="../assets/images/BQ1O2.png" alt="" width="400" height="144" decoding="async">
+        <button type="button" class="js-quiz-q2-opt js-quiz-q2-opt--b" data-option="b" aria-label="Option B">
+            <img src="../assets/images/BQ2O2.png" alt="" width="400" height="144" decoding="async">
         </button>
-        <button type="button" class="js-quiz-q1-opt js-quiz-q1-opt--c" data-option="c" aria-label="Option C">
-            <img src="../assets/images/BQ1O3.png" alt="" width="400" height="144" decoding="async">
+        <button type="button" class="js-quiz-q2-opt js-quiz-q2-opt--c" data-option="c" aria-label="Option C">
+            <img src="../assets/images/BQ2O3.png" alt="" width="400" height="144" decoding="async">
         </button>
-        <button type="button" class="js-quiz-q1-opt js-quiz-q1-opt--d" data-option="d" aria-label="Option D">
-            <img src="../assets/images/BQ1O4.png" alt="" width="400" height="144" decoding="async">
+        <button type="button" class="js-quiz-q2-opt js-quiz-q2-opt--d" data-option="d" aria-label="Option D">
+            <img src="../assets/images/BQ2O4.png" alt="" width="400" height="144" decoding="async">
         </button>
     </div>
 
-    <div class="js-quiz-q1-result-overlays" aria-hidden="true">
-        <div class="js-quiz-q1-wrong-reveal">
+    <div class="js-quiz-q2-result-overlays" aria-hidden="true">
+        <div class="js-quiz-q2-wrong-reveal">
             <img
-                src="../assets/images/BQ1O3.png"
-                alt="Correct answer: let x = 5"
+                src="../assets/images/BQ2O2.png"
+                alt="Correct answer"
                 width="400"
                 height="144"
                 decoding="async">
         </div>
-        <div class="js-quiz-q1-correct-reward">
+        <div class="js-quiz-q2-correct-reward">
             <img
-                src="../assets/images/BURGER.png"
+                src="../assets/images/CAKE.png"
                 alt="Your reward"
                 width="200"
                 height="200"
@@ -69,6 +74,6 @@
     <script src="../questions/questions.js"></script>
     <script src="../js/script.js"></script>
     <script type="module" src="../js/voice-agent.js"></script>
-    <script src="../js/js-quiz-q1.js"></script>
+    <script src="../js/js-quiz-q2.js"></script>
 </body>
 </html>

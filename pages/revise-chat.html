@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Revise | Code For Food</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body class="revise-chat-page">
+    <a href="./points-to-revise.html" class="dashboard-back" aria-label="Back to revise">
+        <img src="../assets/images/back%20button.png" alt="" width="112" height="112" decoding="async">
+    </a>
+
+    <div class="revise-chat-container">
+        <div class="revise-chat-header">
+            <h1 class="revise-chat-title">Revise for my exam</h1>
+            <a href="./points-to-revise.html" class="revise-chat-close" aria-label="Close">×</a>
+        </div>
+        <div class="revise-chat-messages" id="revise-chat-messages" aria-live="polite"></div>
+        <form class="revise-chat-form" id="revise-chat-form">
+            <input type="text" class="revise-chat-input" id="revise-chat-input" placeholder="Ask a question..." autocomplete="off">
+            <button type="submit" class="revise-chat-send">Send</button>
+        </form>
+    </div>
+
+    <script src="../js/supabase.js"></script>
+    <script src="../js/helpers.js"></script>
+    <script src="../questions/questions.js"></script>
+    <script src="../js/script.js"></script>
+    <script type="module" src="../js/revise-chat.js"></script>
+</body>
+</html>

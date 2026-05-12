@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Results | Code For Food</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body class="results-page">
+    <a href="./game.html" class="dashboard-back" aria-label="Back to game">
+        <img
+            src="../assets/images/back%20button.png"
+            alt=""
+            width="112"
+            height="112"
+            decoding="async">
+    </a>
+
+    <div class="results-rewards" id="results-rewards" aria-label="Unlocked rewards">
+        <div class="results-slot results-slot--1" id="results-slot-1" aria-label="Reward 1">
+            <img src="" alt="" width="200" height="200" decoding="async">
+        </div>
+        <div class="results-slot results-slot--2" id="results-slot-2" aria-label="Reward 2">
+            <img src="" alt="" width="200" height="200" decoding="async">
+        </div>
+        <div class="results-slot results-slot--3" id="results-slot-3" aria-label="Reward 3">
+            <img src="" alt="" width="200" height="200" decoding="async">
+        </div>
+    </div>
+
+    <div class="results-stats" id="results-stats" aria-label="Quiz results">
+        <span class="results-stat results-stat--total" id="results-stat-total">0</span>
+        <span class="results-stat results-stat--correct" id="results-stat-correct">0</span>
+        <span class="results-stat results-stat--incorrect" id="results-stat-incorrect">0</span>
+        <span class="results-stat results-stat--score" id="results-stat-score">0/3</span>
+    </div>
+
+    <div class="voice-agent-wrap" id="voice-agent-root">
+        <div class="voice-agent-panel" id="voice-agent-panel" aria-hidden="true">
+            <div class="voice-agent-panel-header">
+                <span class="voice-agent-panel-title">Voice agent</span>
+                <button type="button" class="voice-agent-panel-close" id="voice-agent-close" aria-label="Close chat">×</button>
+            </div>
+            <div class="voice-agent-messages" id="voice-agent-messages" aria-live="polite"></div>
+        </div>
+        <button type="button" class="voice-agent-fab" id="voice-agent-trigger" aria-label="Open voice agent" aria-pressed="false" aria-expanded="false" aria-controls="voice-agent-panel">
+            <img src="../assets/images/voice%20agent.png" alt="" width="64" height="64" decoding="async">
+        </button>
+    </div>
+
+    <script src="../js/supabase.js"></script>
+    <script src="../js/helpers.js"></script>
+    <script src="../questions/questions.js"></script>
+    <script src="../js/script.js"></script>
+    <script type="module" src="../js/voice-agent.js"></script>
+    <script src="../js/results.js"></script>
+</body>
+</html>

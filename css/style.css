@@ -91,6 +91,65 @@ body.revise-page {
     }
 }
 
+/* Forward button — mirrored back button (180°), top-right, hidden until answered */
+.dashboard-forward {
+    position: absolute;
+    top: 0;
+    right: clamp(0.62rem, 2.15vmin, 1.12rem);
+    z-index: 50;
+    display: none;
+    line-height: 0;
+    text-decoration: none;
+    transform: translateY(-2px) rotate(180deg);
+    transition: transform 0.2s ease;
+}
+
+.dashboard-forward:hover,
+.dashboard-forward:focus-visible {
+    transform: translateY(-2px) rotate(180deg) scale(1.06);
+}
+
+.dashboard-forward:focus-visible {
+    outline: 3px solid #4fc3f7;
+    outline-offset: 4px;
+    border-radius: 4px;
+}
+
+.dashboard-forward img {
+    display: block;
+    width: min(112px, min(16vw, 22vh));
+    height: auto;
+    transition: filter 0.2s ease;
+}
+
+.dashboard-forward:hover img,
+.dashboard-forward:focus-visible img {
+    filter:
+        drop-shadow(0 0 5px rgba(141, 110, 99, 0.9))
+        drop-shadow(0 0 12px rgba(93, 64, 55, 0.55))
+        drop-shadow(0 0 20px rgba(62, 39, 35, 0.35));
+}
+
+.dashboard-forward.is-visible {
+    display: block;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .dashboard-forward {
+        transition: none;
+        transform: rotate(180deg);
+    }
+
+    .dashboard-forward:hover,
+    .dashboard-forward:focus-visible {
+        transform: rotate(180deg);
+    }
+
+    .dashboard-forward img {
+        transition: none;
+    }
+}
+
 /* pages/points-to-revise.html — back tile slightly lower than default */
 body.revise-page .dashboard-back {
     top: clamp(0.42rem, 1.35vmin, 0.7rem);
@@ -587,16 +646,7 @@ body.js-quiz-q1-page {
     border: 0;
 }
 
-/* pages/js-quiz-q1.html — voice FAB top-right, smaller; panel opens below */
-body.js-quiz-q1-page .voice-agent-wrap {
-    top: clamp(0.5rem, 2vmin, 1rem);
-    bottom: auto;
-    right: clamp(0.75rem, 3vw, 1.5rem);
-    left: auto;
-    flex-direction: column-reverse;
-    align-items: flex-end;
-}
-
+/* pages/js-quiz-q1.html — voice FAB smaller; positioned at default bottom-right */
 body.js-quiz-q1-page .voice-agent-fab img {
     width: min(64px, min(16vw, 14vh));
 }
@@ -724,6 +774,628 @@ body.js-quiz-q1-page--result-correct .js-quiz-q1-correct-reward {
     .js-quiz-q1-opt:focus-visible {
         transform: translate(-50%, -50%);
     }
+}
+
+/* ================================================================
+   Question 2 (pages/js-quiz-q2.html)
+   ================================================================ */
+
+html:has(body.js-quiz-q2-page) {
+    overflow: hidden;
+}
+
+body.js-quiz-q2-page {
+    height: 100vh;
+    height: 100dvh;
+    max-height: 100vh;
+    max-height: 100dvh;
+    margin: 0;
+    overflow: hidden;
+    overscroll-behavior: none;
+    position: relative;
+    background-color: #2d2419;
+    background-image: url("../assets/images/question2.png");
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    color: #f5f5f5;
+}
+
+.js-quiz-q2-sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border: 0;
+}
+
+body.js-quiz-q2-page .voice-agent-fab img {
+    width: min(64px, min(16vw, 14vh));
+}
+
+.js-quiz-q2-options {
+    position: absolute;
+    inset: 0;
+    z-index: 44;
+    pointer-events: none;
+}
+
+.js-quiz-q2-options > * {
+    pointer-events: auto;
+}
+
+.js-quiz-q2-opt {
+    position: absolute;
+    padding: 0;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    line-height: 0;
+    transform: translate(-50%, -50%);
+    transition: transform 0.18s ease;
+    border-radius: 6px;
+}
+
+.js-quiz-q2-opt:hover,
+.js-quiz-q2-opt:focus-visible {
+    transform: translate(-50%, -50%) scale(1.05);
+}
+
+.js-quiz-q2-opt:focus-visible {
+    outline: 3px solid #ffc107;
+    outline-offset: 3px;
+    z-index: 46;
+}
+
+.js-quiz-q2-opt img {
+    display: block;
+    width: min(400px, min(44vw, 52vh));
+    height: auto;
+}
+
+.js-quiz-q2-opt--a {
+    left: 29%;
+    top: 62%;
+}
+
+.js-quiz-q2-opt--b {
+    left: 71%;
+    top: 62%;
+}
+
+.js-quiz-q2-opt--c {
+    left: 29%;
+    top: 84.5%;
+}
+
+.js-quiz-q2-opt--d {
+    left: 72%;
+    top: 84%;
+}
+
+body.js-quiz-q2-page--answered .js-quiz-q2-options {
+    visibility: hidden;
+    pointer-events: none;
+}
+
+body.js-quiz-q2-page.js-quiz-q2-page--result-correct {
+    background-image: url("../assets/images/correctans.png");
+}
+
+body.js-quiz-q2-page.js-quiz-q2-page--result-wrong {
+    background-image: url("../assets/images/wrongans.png");
+}
+
+.js-quiz-q2-result-overlays {
+    position: absolute;
+    inset: 0;
+    z-index: 45;
+    pointer-events: none;
+}
+
+.js-quiz-q2-wrong-reveal,
+.js-quiz-q2-correct-reward {
+    display: none;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    line-height: 0;
+}
+
+body.js-quiz-q2-page--result-wrong .js-quiz-q2-wrong-reveal {
+    display: block;
+    top: 66%;
+}
+
+body.js-quiz-q2-page--result-correct .js-quiz-q2-correct-reward {
+    display: block;
+    top: 67.5%;
+}
+
+.js-quiz-q2-wrong-reveal img {
+    display: block;
+    width: min(380px, min(42vw, 46vh));
+    height: auto;
+}
+
+.js-quiz-q2-correct-reward img {
+    display: block;
+    width: min(220px, min(30vmin, 38vw));
+    height: auto;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .js-quiz-q2-opt {
+        transition: none;
+    }
+
+    .js-quiz-q2-opt:hover,
+    .js-quiz-q2-opt:focus-visible {
+        transform: translate(-50%, -50%);
+    }
+}
+
+/* ================================================================
+   Question 3 (pages/js-quiz-q3.html)
+   ================================================================ */
+
+html:has(body.js-quiz-q3-page) {
+    overflow: hidden;
+}
+
+body.js-quiz-q3-page {
+    height: 100vh;
+    height: 100dvh;
+    max-height: 100vh;
+    max-height: 100dvh;
+    margin: 0;
+    overflow: hidden;
+    overscroll-behavior: none;
+    position: relative;
+    background-color: #2d2419;
+    background-image: url("../assets/images/question3.png");
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    color: #f5f5f5;
+}
+
+.js-quiz-q3-sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border: 0;
+}
+
+body.js-quiz-q3-page .voice-agent-fab img {
+    width: min(64px, min(16vw, 14vh));
+}
+
+.js-quiz-q3-options {
+    position: absolute;
+    inset: 0;
+    z-index: 44;
+    pointer-events: none;
+}
+
+.js-quiz-q3-options > * {
+    pointer-events: auto;
+}
+
+.js-quiz-q3-opt {
+    position: absolute;
+    padding: 0;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    line-height: 0;
+    transform: translate(-50%, -50%);
+    transition: transform 0.18s ease;
+    border-radius: 6px;
+}
+
+.js-quiz-q3-opt:hover,
+.js-quiz-q3-opt:focus-visible {
+    transform: translate(-50%, -50%) scale(1.05);
+}
+
+.js-quiz-q3-opt:focus-visible {
+    outline: 3px solid #ffc107;
+    outline-offset: 3px;
+    z-index: 46;
+}
+
+.js-quiz-q3-opt img {
+    display: block;
+    width: min(400px, min(44vw, 52vh));
+    height: auto;
+}
+
+.js-quiz-q3-opt--a {
+    left: 29%;
+    top: 62%;
+}
+
+.js-quiz-q3-opt--b {
+    left: 71%;
+    top: 62%;
+}
+
+.js-quiz-q3-opt--c {
+    left: 29%;
+    top: 84.5%;
+}
+
+.js-quiz-q3-opt--d {
+    left: 72%;
+    top: 84%;
+}
+
+body.js-quiz-q3-page--answered .js-quiz-q3-options {
+    visibility: hidden;
+    pointer-events: none;
+}
+
+body.js-quiz-q3-page.js-quiz-q3-page--result-correct {
+    background-image: url("../assets/images/correctans.png");
+}
+
+body.js-quiz-q3-page.js-quiz-q3-page--result-wrong {
+    background-image: url("../assets/images/wrongans.png");
+}
+
+.js-quiz-q3-result-overlays {
+    position: absolute;
+    inset: 0;
+    z-index: 45;
+    pointer-events: none;
+}
+
+.js-quiz-q3-wrong-reveal,
+.js-quiz-q3-correct-reward {
+    display: none;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    line-height: 0;
+}
+
+body.js-quiz-q3-page--result-wrong .js-quiz-q3-wrong-reveal {
+    display: block;
+    top: 66%;
+}
+
+body.js-quiz-q3-page--result-correct .js-quiz-q3-correct-reward {
+    display: block;
+    top: 67.5%;
+}
+
+.js-quiz-q3-wrong-reveal img {
+    display: block;
+    width: min(380px, min(42vw, 46vh));
+    height: auto;
+}
+
+.js-quiz-q3-correct-reward img {
+    display: block;
+    width: min(220px, min(30vmin, 38vw));
+    height: auto;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .js-quiz-q3-opt {
+        transition: none;
+    }
+
+    .js-quiz-q3-opt:hover,
+    .js-quiz-q3-opt:focus-visible {
+        transform: translate(-50%, -50%);
+    }
+}
+
+/* ================================================================
+   Results page (pages/results.html)
+   ================================================================ */
+
+html:has(body.results-page) {
+    overflow: hidden;
+}
+
+body.results-page {
+    height: 100vh;
+    height: 100dvh;
+    max-height: 100vh;
+    max-height: 100dvh;
+    margin: 0;
+    overflow: hidden;
+    overscroll-behavior: none;
+    position: relative;
+    background-color: #2d2419;
+    background-image: url("../assets/images/RESULT%20PAGE.png");
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    color: #f5f5f5;
+}
+
+.results-rewards {
+    position: absolute;
+    inset: 0;
+    z-index: 44;
+    pointer-events: none;
+}
+
+.results-rewards > * {
+    pointer-events: auto;
+}
+
+.results-slot {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    line-height: 0;
+    border-radius: 12px;
+    background: rgba(0, 0, 0, 0.35);
+    border: 2px solid rgba(255, 255, 255, 0.15);
+    padding: 8px;
+}
+
+.results-slot.is-unlocked {
+    background: rgba(0, 0, 0, 0.15);
+    border-color: rgba(255, 215, 0, 0.6);
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+}
+
+.results-slot img {
+    display: block;
+    width: min(60px, min(8vw, 9vh));
+    height: auto;
+}
+
+.results-slot--1 {
+    left: 29%;
+    top: 82.2%;
+}
+
+.results-slot--2 {
+    left: 49.5%;
+    top: 82.2%;
+}
+
+.results-slot--3 {
+    left: 70%;
+    top: 82.2%;
+}
+
+body.results-page .voice-agent-fab img {
+    width: min(64px, min(16vw, 14vh));
+}
+
+/* Results stats text — Minecraft-style pixel font, positioned over the blank fields on RESULT PAGE.png */
+.results-stats {
+    position: absolute;
+    inset: 0;
+    z-index: 45;
+    pointer-events: none;
+    font-family: "Press Start 2P", monospace;
+    font-size: clamp(0.85rem, 2vw, 1.4rem);
+    color: #fff;
+    text-shadow:
+        2px 2px 0 #2d2419,
+        -1px -1px 0 #2d2419,
+        1px -1px 0 #2d2419,
+        -1px 1px 0 #2d2419;
+}
+
+.results-stat {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    white-space: nowrap;
+}
+
+.results-stat--total {
+    left: 24.3%;
+    top: 58%;
+}
+
+.results-stat--incorrect {
+    left: 41.5%;
+    top: 58%;
+}
+
+.results-stat--correct {
+    left: 58%;
+    top: 58%;
+}
+
+.results-stat--score {
+    left: 75.5%;
+    top: 58%;
+}
+
+/* ================================================================
+   Revise chat (pages/revise-chat.html)
+   ================================================================ */
+
+html:has(body.revise-chat-page) {
+    overflow: hidden;
+}
+
+body.revise-chat-page {
+    height: 100vh;
+    height: 100dvh;
+    margin: 0;
+    overflow: hidden;
+    overscroll-behavior: none;
+    background-color: #2d2419;
+    background-image: url("../assets/images/Points%20to%20Revise%20BG.png");
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    color: #f5f5f5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.revise-chat-container {
+    position: relative;
+    width: min(700px, calc(100vw - 3rem));
+    height: min(550px, calc(100vh - 6rem));
+    margin-top: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    background: rgba(22, 22, 24, 0.92);
+    border: 3px solid rgba(79, 195, 247, 0.3);
+    border-radius: 12px;
+    box-shadow:
+        0 0 30px rgba(0, 0, 0, 0.6),
+        inset 0 0 60px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+}
+
+.revise-chat-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem 1rem;
+    border-bottom: 2px solid rgba(79, 195, 247, 0.2);
+    background: rgba(0, 0, 0, 0.3);
+}
+
+.revise-chat-title {
+    margin: 0;
+    font-family: "Press Start 2P", monospace;
+    font-size: clamp(0.6rem, 1.2vw, 0.85rem);
+    color: #e3f2fd;
+}
+
+.revise-chat-close {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    text-decoration: none;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.08);
+    color: #fff;
+    font-size: 1.5rem;
+    line-height: 1;
+    font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+    transition: background 0.15s ease;
+}
+
+.revise-chat-close:hover {
+    background: rgba(255, 255, 255, 0.16);
+}
+
+.revise-chat-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 1rem 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    font-family: "Press Start 2P", monospace;
+    font-size: clamp(0.5rem, 0.9vw, 0.7rem);
+    line-height: 2.2;
+}
+
+.revise-chat-msg {
+    padding: 0.5rem 0.7rem;
+    border-radius: 8px;
+    word-break: break-word;
+    max-width: 92%;
+}
+
+.revise-chat-msg p {
+    margin: 0 0 1rem 0;
+}
+
+.revise-chat-msg p:last-child {
+    margin-bottom: 0;
+}
+
+.revise-chat-msg--user {
+    align-self: flex-end;
+    background: rgba(79, 195, 247, 0.2);
+    border: 1px solid rgba(79, 195, 247, 0.35);
+    color: #e3f7ff;
+}
+
+.revise-chat-msg--assistant {
+    align-self: flex-start;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #f0f0f0;
+}
+
+.revise-chat-msg--system {
+    align-self: center;
+    max-width: 100%;
+    font-size: 0.7em;
+    font-style: italic;
+    color: rgba(255, 255, 255, 0.5);
+    background: transparent;
+    border: none;
+    padding: 0.25rem 0.5rem;
+}
+
+.revise-chat-form {
+    display: flex;
+    gap: 0.5rem;
+    padding: 0.75rem 1rem;
+    border-top: 2px solid rgba(79, 195, 247, 0.2);
+    background: rgba(0, 0, 0, 0.3);
+}
+
+.revise-chat-input {
+    flex: 1;
+    padding: 0.6rem 0.8rem;
+    font-family: "Press Start 2P", monospace;
+    font-size: clamp(0.5rem, 0.9vw, 0.65rem);
+    color: #f0f0f0;
+    background: rgba(255, 255, 255, 0.08);
+    border: 2px solid rgba(79, 195, 247, 0.25);
+    border-radius: 6px;
+    outline: none;
+}
+
+.revise-chat-input:focus {
+    border-color: rgba(79, 195, 247, 0.6);
+}
+
+.revise-chat-input::placeholder {
+    color: rgba(255, 255, 255, 0.3);
+}
+
+.revise-chat-send {
+    padding: 0.6rem 1rem;
+    font-family: "Press Start 2P", monospace;
+    font-size: clamp(0.45rem, 0.85vw, 0.6rem);
+    color: #e3f2fd;
+    background: rgba(79, 195, 247, 0.25);
+    border: 2px solid rgba(79, 195, 247, 0.35);
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.15s ease;
+}
+
+.revise-chat-send:hover {
+    background: rgba(79, 195, 247, 0.4);
+}
+
+.revise-chat-send:active {
+    background: rgba(79, 195, 247, 0.5);
 }
 
 /* pages/game.html — first slot in 2×2 “Available quizzes” board (tune left/top % vs dashboard.png + cover) */
