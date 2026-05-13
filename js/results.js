@@ -36,5 +36,5 @@
   if (totalEl) totalEl.textContent = TOTAL;
   if (correctEl) correctEl.textContent = correct;
   if (incorrectEl) incorrectEl.textContent = incorrect;
-  if (scoreEl) scoreEl.textContent = correct + "/" + TOTAL;
+  if (scoreEl) scoreEl.textContent = correct + "/" + TOTAL + " (" + correct * 10 + " marks)";
 })();

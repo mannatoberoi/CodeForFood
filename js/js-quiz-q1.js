@@ -4,7 +4,12 @@
   var forward = document.querySelector(".js-quiz-q1-forward");
   if (!opts) return;
 
-  try { localStorage.removeItem("quiz_rewards"); } catch (_) {}
+  try {
+    localStorage.removeItem("quiz_rewards");
+  } catch (_) {}
+  if (window.QuizTrack && typeof window.QuizTrack.resetRun === "function") {
+    window.QuizTrack.resetRun();
+  }
 
   opts.querySelectorAll("[data-option]").forEach(function (btn) {
     btn.addEventListener("click", function () {
@@ -12,7 +17,11 @@
 
       var choice = btn.getAttribute("data-option");
       document.body.classList.add("js-quiz-q1-page--answered");
-      if (choice === "c") {
+      var isCorrect = choice === "c";
+      if (window.QuizTrack && typeof window.QuizTrack.recordAnswer === "function") {
+        window.QuizTrack.recordAnswer(1, isCorrect, choice);
+      }
+      if (isCorrect) {
         document.body.classList.add("js-quiz-q1-page--result-correct");
         try {
           var r = JSON.parse(localStorage.getItem("quiz_rewards") || "[]");

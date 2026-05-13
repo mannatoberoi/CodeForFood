@@ -10,7 +10,11 @@
 
       var choice = btn.getAttribute("data-option");
       document.body.classList.add("js-quiz-q2-page--answered");
-      if (choice === "b") {
+      var isCorrect = choice === "b";
+      if (window.QuizTrack && typeof window.QuizTrack.recordAnswer === "function") {
+        window.QuizTrack.recordAnswer(2, isCorrect, choice);
+      }
+      if (isCorrect) {
         document.body.classList.add("js-quiz-q2-page--result-correct");
         try {
           var r = JSON.parse(localStorage.getItem("quiz_rewards") || "[]");

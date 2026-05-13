@@ -6,14 +6,20 @@
     <title>Leaderboard | Code For Food</title>
     <link rel="stylesheet" href="../css/style.css">
 </head>
-<body>
-    <h1>Leaderboard</h1>
-    <nav>
-        <a href="../index.html">Home</a>
-        <a href="./login.html">Login</a>
-        <a href="./rewards.html">Rewards</a>
-        <a href="./game.html">Game</a>
-    </nav>
+<body class="leaderboard-page" data-page="leaderboard">
+    <header class="site-header leaderboard-page-header">
+        <h1>Code For Food</h1>
+        <nav>
+            <a href="../index.html">Home</a>
+            <a href="./login.html">Login</a>
+            <a href="./rewards.html">Rewards</a>
+            <a href="./game.html">Game</a>
+        </nav>
+    </header>
+
+    <main class="leaderboard-main">
+        <ol class="leaderboard-list" id="leaderboard-list" aria-label="Top 10 leaderboard"></ol>
+    </main>
 
     <div class="voice-agent-wrap" id="voice-agent-root">
         <div class="voice-agent-panel" id="voice-agent-panel" aria-hidden="true">
@@ -28,11 +34,6 @@
         </button>
     </div>
 
-    <script src="../js/supabase.js"></script>
-    <script src="../js/helpers.js"></script>
-    <script src="../questions/questions.js"></script>
-    <script src="../js/script.js"></script>
-    <script type="module" src="../js/voice-agent.js"></script>
+    <script type="module" src="../js/leaderboard-page.js"></script>
 </body>
 </html>
-
