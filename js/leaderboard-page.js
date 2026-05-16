@@ -2,6 +2,8 @@ import "./voice-agent.js";
 import { getSupabase, isSupabaseConfigured } from "./supabase-client.js";
 import { fetchLeaderboard } from "./supabase-quiz.js";
 
+const TOP_COUNT = 5;
+
 const list = document.getElementById("leaderboard-list");
 const statusEl = document.getElementById("leaderboard-status");
 
@@ -53,7 +55,7 @@ function createRow(row, currentUsername) {
 
   const marks = document.createElement("span");
   marks.className = "leaderboard-marks";
-  marks.textContent = String(row.best_marks);
+  marks.textContent = `${row.best_marks} pts`;
 
   li.append(rank, name, marks);
   return li;
@@ -63,7 +65,7 @@ function showLoading() {
   if (!list) return;
   list.innerHTML = "";
   list.classList.add("leaderboard-list--loading");
-  for (let i = 0; i < 5; i += 1) {
+  for (let i = 0; i < TOP_COUNT; i += 1) {
     const li = document.createElement("li");
     li.className = "leaderboard-row leaderboard-row--skeleton";
     li.setAttribute("aria-hidden", "true");
@@ -73,7 +75,7 @@ function showLoading() {
       '<span class="leaderboard-marks"></span>';
     list.appendChild(li);
   }
-  setStatus("Loading scores…", "info");
+  setStatus("", "info");
 }
 
 function renderRows(rows, currentUsername) {
@@ -88,7 +90,7 @@ function renderRows(rows, currentUsername) {
 
   setStatus("", "info");
 
-  rows.forEach((row) => {
+  rows.slice(0, TOP_COUNT).forEach((row) => {
     list.appendChild(createRow(row, currentUsername));
   });
 }
@@ -109,7 +111,7 @@ function renderRows(rows, currentUsername) {
   }
 
   const [result, currentUsername] = await Promise.all([
-    fetchLeaderboard(10),
+    fetchLeaderboard(TOP_COUNT),
     getCurrentUsername(),
   ]);
 
