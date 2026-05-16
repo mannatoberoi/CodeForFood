@@ -7,6 +7,10 @@
     <link rel="stylesheet" href="../css/style.css">
 </head>
 <body class="profile-page" data-page="profile">
+    <button type="button" class="dashboard-back" id="profile-back" aria-label="Go back to previous page">
+        <img src="../assets/images/back%20button.png" alt="" width="112" height="112" decoding="async">
+    </button>
+
     <header class="site-header profile-page-header">
         <h1>Code For Food</h1>
         <nav>
@@ -42,6 +46,73 @@
                     <dd id="profile-id" class="profile-id-value">—</dd>
                 </div>
             </dl>
+
+            <section class="profile-settings" aria-labelledby="profile-settings-title">
+                <h3 id="profile-settings-title" class="profile-settings-title">Account settings</h3>
+
+                <form class="profile-settings-form" id="username-form" novalidate>
+                    <h4 class="profile-settings-subtitle">Edit username</h4>
+                    <div class="auth-field">
+                        <label for="profile-username-input">Display name</label>
+                        <input
+                            id="profile-username-input"
+                            name="username"
+                            type="text"
+                            autocomplete="nickname"
+                            required
+                            minlength="2"
+                            maxlength="32"
+                            placeholder="Your display name"
+                        >
+                    </div>
+                    <div class="profile-settings-actions">
+                        <button type="button" class="auth-btn auth-btn--primary" id="btn-save-username">Save username</button>
+                    </div>
+                </form>
+
+                <form class="profile-settings-form" id="password-form" novalidate>
+                    <h4 class="profile-settings-subtitle">Change password</h4>
+                    <div class="auth-field">
+                        <label for="profile-current-password">Current password</label>
+                        <input
+                            id="profile-current-password"
+                            name="current-password"
+                            type="password"
+                            autocomplete="current-password"
+                            required
+                            minlength="6"
+                            placeholder="••••••••"
+                        >
+                    </div>
+                    <div class="auth-field">
+                        <label for="profile-new-password">New password</label>
+                        <input
+                            id="profile-new-password"
+                            name="new-password"
+                            type="password"
+                            autocomplete="new-password"
+                            required
+                            minlength="6"
+                            placeholder="••••••••"
+                        >
+                    </div>
+                    <div class="auth-field">
+                        <label for="profile-confirm-password">Confirm new password</label>
+                        <input
+                            id="profile-confirm-password"
+                            name="confirm-password"
+                            type="password"
+                            autocomplete="new-password"
+                            required
+                            minlength="6"
+                            placeholder="••••••••"
+                        >
+                    </div>
+                    <div class="profile-settings-actions">
+                        <button type="button" class="auth-btn auth-btn--primary" id="btn-change-password">Change password</button>
+                    </div>
+                </form>
+            </section>
 
             <nav class="profile-nav" aria-label="Site sections">
                 <h3 class="profile-nav-title">Go to</h3>

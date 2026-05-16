@@ -1,5 +1,6 @@
 import "./voice-agent.js";
 import { getSupabase } from "./supabase-client.js";
+import { saveProfileReturnUrl } from "./nav-return.js";
 
 const form = document.getElementById("auth-form");
 const usernameInput = document.getElementById("username");
@@ -54,6 +55,7 @@ async function handleLogin(e) {
   }
 
   setMessage("", "info");
+  saveProfileReturnUrl(new URL("./game.html", window.location.href).href);
   window.location.assign("./profile.html");
 }
 
@@ -99,6 +101,7 @@ async function handleSignup() {
 
   if (data.session) {
     setMessage("", "info");
+    saveProfileReturnUrl(new URL("./game.html", window.location.href).href);
     window.location.assign("./profile.html");
   }
 }
@@ -110,6 +113,7 @@ async function redirectIfLoggedIn() {
     data: { user },
   } = await supabase.auth.getUser();
   if (user) {
+    saveProfileReturnUrl(new URL("./game.html", window.location.href).href);
     window.location.assign("./profile.html");
   }
 }

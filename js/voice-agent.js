@@ -1,3 +1,5 @@
+import { saveProfileReturnUrl } from "./nav-return.js";
+
 /**
  * Voice agent: microphone → Groq chat → on-screen text + speech synthesis.
  *
@@ -225,6 +227,9 @@ const GROQ_URL =
       }
 
       if (navUrl) {
+        if (/profile\.html/i.test(navUrl)) {
+          saveProfileReturnUrl();
+        }
         appendMessage("assistant", "Navigating…");
         speak("Navigating");
         window.location.assign(navUrl);
