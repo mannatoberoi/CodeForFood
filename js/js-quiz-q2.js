@@ -11,8 +11,9 @@
       var choice = btn.getAttribute("data-option");
       document.body.classList.add("js-quiz-q2-page--answered");
       var isCorrect = choice === "b";
+      var rewardKey = isCorrect ? "CAKE.png" : null;
       if (window.QuizTrack && typeof window.QuizTrack.recordAnswer === "function") {
-        window.QuizTrack.recordAnswer(2, isCorrect, choice);
+        window.QuizTrack.recordAnswer(2, isCorrect, choice, rewardKey);
       }
       if (isCorrect) {
         document.body.classList.add("js-quiz-q2-page--result-correct");

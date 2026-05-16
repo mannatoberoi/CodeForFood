@@ -5,7 +5,6 @@ import { fetchLatestWrongAnswers } from "./supabase-quiz.js";
 const QUESTION_LABEL = {
   1: "Q1 — declaring a variable",
   2: "Q2 — variable declaration",
-  3: "Q3 — JS basics",
 };
 
 const container = document.getElementById("revise-wrong-list");
@@ -27,8 +26,7 @@ function renderFromLocalStorage() {
   const wrong = Array.isArray(answers) ? answers.filter((a) => a && a.correct === false) : [];
   container.innerHTML = "";
   wrong.forEach((a) => {
-    const title = QUESTION_LABEL[a.question] || "Q" + a.question;
-    addLine(title + " — chose " + String(a.choice || "?").toUpperCase());
+    addLine("chose " + String(a.choice || "?").toUpperCase());
   });
 }
 
@@ -62,7 +60,6 @@ function renderFromLocalStorage() {
   }
 
   wrong.forEach((a) => {
-    const title = QUESTION_LABEL[a.question] || "Q" + a.question;
-    addLine(title + " — chose " + String(a.choice || "?").toUpperCase());
+    addLine("chose " + String(a.choice || "?").toUpperCase());
   });
 })();

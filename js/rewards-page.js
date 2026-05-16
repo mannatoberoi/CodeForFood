@@ -1,27 +1,72 @@
 import "./voice-agent.js";
 import { getSupabase, isSupabaseConfigured } from "./supabase-client.js";
-import { fetchUserRewards } from "./supabase-quiz.js";
+import { fetchUserRewards, fetchLatestQuizRun } from "./supabase-quiz.js";
 
-const grid = document.getElementById("rewards-grid");
+var grid = document.getElementById("rewards-grid");
 
-function renderLocalFallback() {
+function renderRecords(records) {
   if (!grid) return;
-  let earned = [];
-  try {
-    earned = JSON.parse(localStorage.getItem("quiz_rewards") || "[]");
-  } catch (_) {}
   grid.innerHTML = "";
-  earned.forEach((file) => {
-    const wrap = document.createElement("div");
-    wrap.className = "rewards-grid-item";
-    const img = document.createElement("img");
-    img.src = "../assets/images/" + file;
+
+  if (!records || records.length === 0) {
+    var empty = document.createElement("p");
+    empty.className = "rewards-empty";
+    empty.textContent = "No rewards earned yet. Take the quiz!";
+    grid.appendChild(empty);
+    return;
+  }
+
+  records.forEach(function (rec) {
+    var wrap = document.createElement("div");
+    wrap.className = "rewards-record";
+
+    var imgWrap = document.createElement("div");
+    imgWrap.className = "rewards-record-img";
+
+    var img = document.createElement("img");
+    img.src = "../assets/images/" + rec.reward_key;
     img.alt = "Reward";
     img.width = 160;
     img.height = 160;
     img.decoding = "async";
-    wrap.appendChild(img);
+    imgWrap.appendChild(img);
+
+    wrap.appendChild(imgWrap);
     grid.appendChild(wrap);
+  });
+}
+
+function buildFromLocalAnswers(answers, rewards) {
+  var result = [];
+  if (!Array.isArray(rewards) || rewards.length === 0) return result;
+
+  var rewardIdx = 0;
+  for (var i = 0; i < answers.length; i++) {
+    if (answers[i].correct && rewardIdx < rewards.length) {
+      result.push({
+        reward_key: rewards[rewardIdx],
+        question: answers[i].question,
+        choice: answers[i].choice,
+      });
+      rewardIdx++;
+    }
+  }
+  return result;
+}
+
+function loadLocal() {
+  var answers = [];
+  var rewards = [];
+  try {
+    answers = JSON.parse(localStorage.getItem("quiz_run_answers") || "[]");
+    rewards = JSON.parse(localStorage.getItem("quiz_rewards") || "[]");
+  } catch (_) {}
+  return buildFromLocalAnswers(answers, rewards);
+}
+
+function rewardsToSimpleRecords(rewardKeys) {
+  return (rewardKeys || []).map(function (key) {
+    return { reward_key: key };
   });
 }
 
@@ -29,41 +74,42 @@ function renderLocalFallback() {
   if (!grid) return;
 
   if (!isSupabaseConfigured()) {
-    renderLocalFallback();
+    renderRecords(loadLocal());
     return;
   }
 
-  const supabase = getSupabase();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  var supabase = getSupabase();
+  var { data: { user } } = await supabase.auth.getUser();
 
   if (!user) {
-    renderLocalFallback();
+    renderRecords(loadLocal());
     return;
   }
 
-  const { rewards, error } = await fetchUserRewards();
-  if (error) {
-    renderLocalFallback();
+  var localRecords = loadLocal();
+
+  var { rewards: dbRewards, error: rwErr } = await fetchUserRewards();
+  var { run: latestRun, error: runErr } = await fetchLatestQuizRun();
+
+  if (rwErr || runErr) {
+    renderRecords(localRecords.length ? localRecords : null);
     return;
   }
 
-  grid.innerHTML = "";
-  if (!rewards.length) {
+  if (latestRun && latestRun.answers && latestRun.rewards) {
+    var answersFromRun = Array.isArray(latestRun.answers) ? latestRun.answers : [];
+    var rewardsFromRun = Array.isArray(latestRun.rewards) ? latestRun.rewards : [];
+    var runRecords = buildFromLocalAnswers(answersFromRun, rewardsFromRun);
+    if (runRecords.length) {
+      renderRecords(runRecords);
+      return;
+    }
+  }
+
+  if (dbRewards && dbRewards.length) {
+    renderRecords(rewardsToSimpleRecords(dbRewards.map(function (r) { return r.reward_key; })));
     return;
   }
 
-  rewards.forEach((row) => {
-    const wrap = document.createElement("div");
-    wrap.className = "rewards-grid-item";
-    const img = document.createElement("img");
-    img.src = "../assets/images/" + row.reward_key;
-    img.alt = "Reward";
-    img.width = 160;
-    img.height = 160;
-    img.decoding = "async";
-    wrap.appendChild(img);
-    grid.appendChild(wrap);
-  });
+  renderRecords(localRecords.length ? localRecords : null);
 })();

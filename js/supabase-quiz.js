@@ -117,6 +117,24 @@ export async function fetchLeaderboard(limit = 10) {
   return { rows: data || [], error: null };
 }
 
+export async function fetchLatestQuizRun() {
+  const supabase = getSupabase();
+  if (!supabase) return { run: null, error: "no_client" };
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) return { run: null, error: "not_logged_in" };
+  const { data, error } = await supabase
+    .from("quiz_runs")
+    .select("answers, rewards, created_at")
+    .eq("user_id", user.id)
+    .order("created_at", { ascending: false })
+    .limit(1)
+    .maybeSingle();
+  if (error) return { run: null, error: error.message };
+  return { run: data || null, error: null };
+}
+
 export async function fetchLatestWrongAnswers() {
   const supabase = getSupabase();
   if (!supabase) return { wrong: [], error: "no_client" };

@@ -16,10 +16,11 @@ body {
 body.rewards-page {
     position: relative;
     min-height: 100vh;
+    overflow: hidden;
     background-color: #3d3428;
     background-image: url("../assets/images/myrewardbg.png");
-    background-size: cover;
-    background-position: center center;
+    background-size: contain;
+    background-position: center top;
     background-repeat: no-repeat;
 }
 
@@ -39,7 +40,7 @@ body.revise-page {
 /* Dashboard — wooden back tile over background (top-left) */
 .dashboard-back {
     position: absolute;
-    top: 0;
+    top: 5rem;
     left: clamp(0.62rem, 2.15vmin, 1.12rem);
     z-index: 50;
     display: block;
@@ -47,6 +48,10 @@ body.revise-page {
     text-decoration: none;
     transform: translateY(-2px);
     transition: transform 0.2s ease;
+}
+
+body.rewards-page .dashboard-back {
+    top: -10.3rem;
 }
 
 .dashboard-back:hover,
@@ -1813,31 +1818,78 @@ body.login-page {
     }
 }
 
-/* pages/rewards.html — icons only on room art (no caption panel) */
+/* pages/rewards.html — reward record cards over room art */
 body.rewards-page .rewards-grid {
     position: relative;
     z-index: 20;
     display: flex;
     flex-wrap: wrap;
-    gap: 1rem;
+    gap: 0.5rem;
     justify-content: center;
-    max-width: 44rem;
-    margin: clamp(5.5rem, 15vh, 8rem) auto 2rem;
+    align-items: flex-start;
+    max-width: 52rem;
+    margin: clamp(10rem, 25vh, 14rem) auto 2rem -5.3rem;
     padding: 0 1rem;
+
 }
 
-.rewards-grid-item {
-    line-height: 0;
-    padding: 4px;
-    border-radius: 8px;
+.rewards-record {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0;
+    border-radius: 10px;
     background: transparent;
     border: none;
+    min-width: 120px;
 }
 
-.rewards-grid-item img {
+.rewards-record:nth-child(3) {
+    transform: translateY(-1.5rem);
+}
+
+.rewards-record-img {
+    line-height: 0;
+}
+
+.rewards-record-img img {
     display: block;
-    width: min(120px, 28vw);
+    width: min(95px, 20vw);
     height: auto;
+    image-rendering: pixelated;
+}
+
+.rewards-record-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.15rem;
+}
+
+.rewards-record-question {
+    font-family: "Press Start 2P", system-ui, monospace;
+    font-size: clamp(0.55rem, 1.4vw, 0.75rem);
+    color: #ffd54f;
+    text-shadow: 2px 2px 0 #5d4037;
+    letter-spacing: 0.03em;
+}
+
+.rewards-record-choice {
+    font-family: "Press Start 2P", system-ui, monospace;
+    font-size: clamp(0.45rem, 1vw, 0.6rem);
+    color: #aed581;
+    text-shadow: 1px 1px 0 #33691e;
+    letter-spacing: 0.02em;
+}
+
+.rewards-empty {
+    font-family: "Press Start 2P", system-ui, monospace;
+    font-size: clamp(0.55rem, 1.5vw, 0.8rem);
+    color: #bcaaa4;
+    text-shadow: 2px 2px 0 #3e2723;
+    text-align: center;
+    margin-top: 2rem;
 }
 
 /* pages/leaderboard.html */

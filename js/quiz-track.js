@@ -15,7 +15,7 @@
     } catch (_) {}
   }
 
-  function recordAnswer(questionNum, isCorrect, choiceLetter) {
+  function recordAnswer(questionNum, isCorrect, choiceLetter, rewardKey) {
     var arr = [];
     try {
       arr = JSON.parse(global.localStorage.getItem(KEY) || "[]");
@@ -26,6 +26,7 @@
       question: questionNum,
       correct: !!isCorrect,
       choice: String(choiceLetter || ""),
+      reward: rewardKey || null,
     });
     try {
       global.localStorage.setItem(KEY, JSON.stringify(arr));

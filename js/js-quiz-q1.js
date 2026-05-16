@@ -18,8 +18,9 @@
       var choice = btn.getAttribute("data-option");
       document.body.classList.add("js-quiz-q1-page--answered");
       var isCorrect = choice === "c";
+      var rewardKey = isCorrect ? "BURGER.png" : null;
       if (window.QuizTrack && typeof window.QuizTrack.recordAnswer === "function") {
-        window.QuizTrack.recordAnswer(1, isCorrect, choice);
+        window.QuizTrack.recordAnswer(1, isCorrect, choice, rewardKey);
       }
       if (isCorrect) {
         document.body.classList.add("js-quiz-q1-page--result-correct");
