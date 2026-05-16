@@ -4,22 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Leaderboard | Code For Food</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/style.css">
 </head>
 <body class="leaderboard-page" data-page="leaderboard">
-    <header class="site-header leaderboard-page-header">
-        <h1>Code For Food</h1>
-        <nav>
-            <a href="../index.html">Home</a>
-            <a href="./profile.html">Profile</a>
-            <a href="./login.html">Login</a>
-            <a href="./rewards.html">Rewards</a>
-            <a href="./game.html">Game</a>
-        </nav>
-    </header>
+    <main class="leaderboard-stage" aria-labelledby="leaderboard-title">
+        <h1 id="leaderboard-title" class="visually-hidden">Leaderboard — top players</h1>
 
-    <main class="leaderboard-main">
-        <ol class="leaderboard-list" id="leaderboard-list" aria-label="Top 10 leaderboard"></ol>
+        <a href="./game.html" class="dashboard-back leaderboard-back" aria-label="Back to game">
+            <img src="../assets/images/back%20button.png" alt="" width="112" height="112" decoding="async">
+        </a>
+
+        <div class="leaderboard-data">
+            <ol class="leaderboard-list" id="leaderboard-list" aria-label="Top 10 players by best quiz score"></ol>
+            <p class="leaderboard-status" id="leaderboard-status" role="status" aria-live="polite">Loading scores…</p>
+        </div>
+
+        <a href="./game.html" class="leaderboard-play-btn" aria-label="Keep climbing — play the quiz"></a>
     </main>
 
     <div class="voice-agent-wrap" id="voice-agent-root">

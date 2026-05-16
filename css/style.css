@@ -1892,66 +1892,229 @@ body.rewards-page .rewards-grid {
     margin-top: 2rem;
 }
 
-/* pages/leaderboard.html */
+/* pages/leaderboard.html — layout locked to leaderboard-main.png (1672×941) */
 body.leaderboard-page {
-    min-height: 100vh;
-    margin: 0;
-    background:
-        radial-gradient(ellipse 100% 70% at 50% 0%, rgba(255, 193, 7, 0.1), transparent 50%),
-        linear-gradient(170deg, #1a1a1a 0%, #2a2218 50%, #1a1a1a 100%);
-    color: #f5f5f5;
-}
-
-.leaderboard-page-header.site-header {
-    position: relative;
-    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.2));
-    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-}
-
-.leaderboard-main {
     display: flex;
+    align-items: center;
     justify-content: center;
-    padding: clamp(1.5rem, 4vw, 2.5rem) 1rem 4rem;
+    min-height: 100vh;
+    min-height: 100dvh;
+    margin: 0;
+    overflow: hidden;
+    background-color: #2d2419;
+    color: #2c1810;
+}
+
+.leaderboard-stage {
+    position: relative;
+    width: min(100vw, calc(100dvh * 1672 / 941));
+    height: min(100dvh, calc(100vw * 941 / 1672));
+    background: url("../assets/images/leaderboard-main.png") center / 100% 100% no-repeat;
+    flex-shrink: 0;
+}
+
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* Back — top-left clear of title art */
+.leaderboard-back.dashboard-back {
+    position: absolute;
+    top: 2%;
+    left: 1.5%;
+    z-index: 30;
+    transform: none;
+}
+
+.leaderboard-back.dashboard-back img {
+    width: min(72px, 10vw);
+}
+
+/* Parchment rows only (art has TOP PLAYERS + column headers) */
+.leaderboard-data {
+    position: absolute;
+    left: 19.5%;
+    right: 19.5%;
+    top: 41.5%;
+    bottom: 23.5%;
+    z-index: 20;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.leaderboard-data > * {
+    pointer-events: auto;
 }
 
 .leaderboard-list {
     list-style: none;
-    width: min(100%, 26rem);
     margin: 0;
     padding: 0;
+    overflow-y: auto;
+    flex: 1;
+    min-height: 0;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(44, 24, 16, 0.35) transparent;
+}
+
+.leaderboard-list::-webkit-scrollbar {
+    width: 5px;
+}
+
+.leaderboard-list::-webkit-scrollbar-thumb {
+    border-radius: 3px;
+    background: rgba(44, 24, 16, 0.3);
 }
 
 .leaderboard-row {
     display: grid;
-    grid-template-columns: 2.25rem 1fr auto;
+    grid-template-columns: 20% 52% 28%;
     align-items: center;
-    gap: 0.65rem;
-    padding: 0.55rem 0;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-    font-size: 0.95rem;
+    min-height: 11.5%;
+    padding: 0 2%;
+    font-family: "Press Start 2P", monospace;
+    font-size: clamp(0.34rem, 0.85vw, 0.48rem);
+    line-height: 1.5;
+    box-sizing: border-box;
 }
 
-.leaderboard-row:last-child {
-    border-bottom: none;
+.leaderboard-row--top-1 .leaderboard-rank {
+    color: #8b6914;
+}
+
+.leaderboard-row--top-2 .leaderboard-rank {
+    color: #5c6b73;
+}
+
+.leaderboard-row--top-3 .leaderboard-rank {
+    color: #8b4513;
+}
+
+.leaderboard-row--you {
+    background: rgba(76, 175, 80, 0.14);
+    border-radius: 4px;
 }
 
 .leaderboard-rank {
-    font-weight: 700;
-    color: #ffd54f;
+    font-weight: 400;
+    color: #3d2914;
     font-variant-numeric: tabular-nums;
+    text-align: center;
 }
 
 .leaderboard-name {
-    font-weight: 600;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    text-align: center;
+    color: #2c1810;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.25);
 }
 
 .leaderboard-marks {
-    font-weight: 700;
-    color: #81d4fa;
+    color: #1b5e20;
     font-variant-numeric: tabular-nums;
+    text-align: right;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.25);
+}
+
+.leaderboard-status {
+    flex-shrink: 0;
+    margin: 0;
+    padding-top: 0.25rem;
+    font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+    font-size: clamp(0.55rem, 1.2vw, 0.72rem);
+    line-height: 1.35;
+    text-align: center;
+    color: rgba(44, 24, 16, 0.82);
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+.leaderboard-status:empty,
+.leaderboard-status[hidden] {
+    display: none;
+}
+
+.leaderboard-status[data-kind="error"] {
+    color: #b71c1c;
+}
+
+/* KEEP CLIMBING! button in art */
+.leaderboard-play-btn {
+    position: absolute;
+    left: 33%;
+    right: 33%;
+    bottom: 7.5%;
+    height: 7.5%;
+    z-index: 25;
+    border-radius: 6px;
+    text-decoration: none;
+}
+
+.leaderboard-play-btn:focus-visible {
+    outline: 3px solid #4fc3f7;
+    outline-offset: 3px;
+}
+
+.leaderboard-list--loading .leaderboard-row--skeleton .leaderboard-rank,
+.leaderboard-list--loading .leaderboard-row--skeleton .leaderboard-name,
+.leaderboard-list--loading .leaderboard-row--skeleton .leaderboard-marks {
+    border-radius: 4px;
+    background: linear-gradient(
+        90deg,
+        rgba(44, 24, 16, 0.08) 0%,
+        rgba(44, 24, 16, 0.16) 50%,
+        rgba(44, 24, 16, 0.08) 100%
+    );
+    background-size: 200% 100%;
+    animation: leaderboard-shimmer 1.2s ease-in-out infinite;
+    color: transparent;
+    min-height: 0.75rem;
+}
+
+.leaderboard-list--loading .leaderboard-row--skeleton .leaderboard-name {
+    min-height: 0.7rem;
+}
+
+.leaderboard-list--loading .leaderboard-row--skeleton .leaderboard-marks {
+    width: 2.5rem;
+    justify-self: end;
+}
+
+@keyframes leaderboard-shimmer {
+    0% {
+        background-position: 100% 0;
+    }
+    100% {
+        background-position: -100% 0;
+    }
+}
+
+/* Voice agent — bottom-left so it does not cover the gift box or play button */
+body.leaderboard-page .voice-agent-wrap {
+    right: auto;
+    left: clamp(0.75rem, 3vw, 1.5rem);
+    bottom: clamp(0.75rem, 2vh, 1.25rem);
+    align-items: flex-start;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .leaderboard-list--loading .leaderboard-row--skeleton .leaderboard-rank,
+    .leaderboard-list--loading .leaderboard-row--skeleton .leaderboard-name,
+    .leaderboard-list--loading .leaderboard-row--skeleton .leaderboard-marks {
+        animation: none;
+        background: rgba(44, 24, 16, 0.1);
+    }
 }
 
 /* pages/points-to-revise.html — minimal lines over scene (no panel) */
