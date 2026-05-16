@@ -1938,3 +1938,184 @@ body.revise-page .revise-line {
     left: clamp(1.25rem, 5vw, 2.75rem);
     align-items: flex-start;
 }
+
+/* pages/profile.html */
+body.profile-page {
+    min-height: 100vh;
+    margin: 0;
+    background:
+        radial-gradient(ellipse 120% 80% at 50% 0%, rgba(129, 212, 250, 0.14), transparent 55%),
+        linear-gradient(165deg, #1a1a1a 0%, #1e2428 45%, #1a1a1a 100%);
+    color: #f5f5f5;
+}
+
+.profile-page-header.site-header {
+    position: relative;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.2));
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.profile-main {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: clamp(1.5rem, 5vw, 3rem) 1rem 4rem;
+}
+
+.profile-card {
+    width: min(100%, 32rem);
+    padding: clamp(1.5rem, 4vw, 2.25rem);
+    border-radius: 14px;
+    background: rgba(30, 30, 30, 0.92);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow:
+        0 18px 40px rgba(0, 0, 0, 0.45),
+        0 0 0 1px rgba(255, 255, 255, 0.04) inset;
+}
+
+.profile-card h2 {
+    margin: 0 0 1.25rem;
+    font-size: clamp(1.35rem, 3.5vw, 1.6rem);
+    letter-spacing: 0.02em;
+    text-align: center;
+}
+
+.profile-avatar-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 1.25rem;
+}
+
+.profile-avatar {
+    --profile-avatar-hue: 200;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: clamp(5rem, 18vw, 6.5rem);
+    height: clamp(5rem, 18vw, 6.5rem);
+    border-radius: 50%;
+    background: linear-gradient(
+        145deg,
+        hsl(var(--profile-avatar-hue) 65% 55%),
+        hsl(calc(var(--profile-avatar-hue) + 24) 70% 42%)
+    );
+    border: 3px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+}
+
+.profile-avatar-initials {
+    font-size: clamp(1.5rem, 5vw, 2rem);
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: #fff;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
+}
+
+.profile-avatar-label {
+    margin: 0.5rem 0 0;
+    font-size: 0.75rem;
+    color: rgba(245, 245, 245, 0.5);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+.profile-details {
+    margin: 0 0 1.5rem;
+    padding: 0;
+}
+
+.profile-detail {
+    margin-bottom: 0.85rem;
+}
+
+.profile-detail dt {
+    margin: 0 0 0.2rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: rgba(245, 245, 245, 0.55);
+}
+
+.profile-detail dd {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 600;
+    word-break: break-word;
+}
+
+.profile-detail--id .profile-id-value {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: rgba(129, 212, 250, 0.95);
+    line-height: 1.4;
+}
+
+.profile-nav-title {
+    margin: 0 0 0.65rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: rgba(245, 245, 245, 0.55);
+}
+
+.profile-nav-list {
+    list-style: none;
+    margin: 0 0 1.25rem;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(9rem, 1fr));
+    gap: 0.5rem;
+}
+
+.profile-nav-btn {
+    display: block;
+    padding: 0.55rem 0.75rem;
+    border-radius: 8px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #f5f5f5;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    transition: background 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
+}
+
+.profile-nav-btn:hover {
+    background: rgba(79, 195, 247, 0.15);
+    border-color: rgba(79, 195, 247, 0.45);
+    transform: translateY(-1px);
+}
+
+.profile-nav-btn:focus-visible {
+    outline: 3px solid #4fc3f7;
+    outline-offset: 2px;
+}
+
+.profile-actions {
+    display: flex;
+    justify-content: center;
+}
+
+.profile-actions .auth-btn {
+    flex: 0 1 auto;
+    min-width: 10rem;
+}
+
+.profile-message {
+    text-align: center;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .profile-nav-btn {
+        transition: none;
+    }
+
+    .profile-nav-btn:hover {
+        transform: none;
+    }
+}

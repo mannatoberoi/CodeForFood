@@ -10,6 +10,7 @@ export default defineConfig({
       input: {
         main: resolve(__dirname, "index.html"),
         login: resolve(__dirname, "pages/login.html"),
+        profile: resolve(__dirname, "pages/profile.html"),
         rewards: resolve(__dirname, "pages/rewards.html"),
         pointsToRevise: resolve(__dirname, "pages/points-to-revise.html"),
         game: resolve(__dirname, "pages/game.html"),

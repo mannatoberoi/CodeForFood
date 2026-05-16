@@ -216,6 +216,8 @@ const GROQ_URL =
         navUrl = new URL("./rewards.html", window.location.href).href;
       } else if (/leaderboard/i.test(transcript) || /leader.?board/i.test(transcript)) {
         navUrl = new URL("./leaderboard.html", window.location.href).href;
+      } else if (/profile|account|my\s*profile/i.test(transcript)) {
+        navUrl = new URL("./profile.html", window.location.href).href;
       } else if (/login/i.test(transcript) || /sign.?in/i.test(transcript) || /log.?in/i.test(transcript)) {
         navUrl = new URL("./login.html", window.location.href).href;
       } else if (/revise/i.test(transcript) || /point/i.test(transcript)) {

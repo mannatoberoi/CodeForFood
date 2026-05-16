@@ -54,7 +54,7 @@ async function handleLogin(e) {
   }
 
   setMessage("", "info");
-  window.location.assign("./game.html");
+  window.location.assign("./profile.html");
 }
 
 async function handleSignup() {
@@ -74,12 +74,12 @@ async function handleSignup() {
   setBusy(true);
   setMessage("", "info");
 
-  const redirectTo = `${window.location.origin}${window.location.pathname}`;
+  const emailRedirectTo = new URL("./profile.html", window.location.href).href;
   const { data, error } = await supabase.auth.signUp({
     email,
     password,
     options: {
-      emailRedirectTo: redirectTo,
+      emailRedirectTo,
       data: {
         username: email.split("@")[0] || "player",
       },
@@ -99,9 +99,21 @@ async function handleSignup() {
 
   if (data.session) {
     setMessage("", "info");
-    window.location.assign("./game.html");
+    window.location.assign("./profile.html");
+  }
+}
+
+async function redirectIfLoggedIn() {
+  const supabase = getSupabase();
+  if (!supabase) return;
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (user) {
+    window.location.assign("./profile.html");
   }
 }
 
 form?.addEventListener("submit", handleLogin);
 btnSignup?.addEventListener("click", handleSignup);
+redirectIfLoggedIn();
