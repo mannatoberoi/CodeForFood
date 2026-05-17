@@ -20,7 +20,7 @@
         <a href="https://htmlcheatsheet.com/js/" class="revise-panel-btn revise-panel-btn--2" aria-label="Quick points to revise" target="_blank" rel="noopener noreferrer">
             <img src="../assets/images/revise%20button%202.png" alt="" width="118" height="59" decoding="async">
         </a>
-        <a href="#" class="revise-panel-btn revise-panel-btn--3" aria-label="Topics you might need to read again">
+        <a href="#" class="revise-panel-btn revise-panel-btn--3" aria-label="Topics you might need to read again" id="btn-jscho">
             <img src="../assets/images/revise%20button%203.png" alt="" width="96" height="48" decoding="async">
         </a>
     </div>
@@ -36,6 +36,13 @@
         <button type="button" class="voice-agent-fab" id="voice-agent-trigger" aria-label="Open voice agent" aria-pressed="false" aria-expanded="false" aria-controls="voice-agent-panel">
             <img src="../assets/images/voice%20agent.png" alt="" width="120" height="120" decoding="async">
         </button>
+    </div>
+
+    <div class="jscho-overlay" id="jscho-overlay" aria-hidden="true">
+        <button type="button" class="jscho-close" id="jscho-close" aria-label="Close">&times;</button>
+        <div class="jscho-scroll-wrap">
+            <img src="../assets/images/jscho.jpeg" alt="JavaScript Cheatsheet" class="jscho-image">
+        </div>
     </div>
 
     <script type="module" src="../js/points-revise-page.js"></script>

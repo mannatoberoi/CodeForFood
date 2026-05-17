@@ -2145,6 +2145,49 @@ body.revise-page .revise-line {
     border: none;
 }
 
+/* pages/points-to-revise.html — jscho lightbox overlay */
+.jscho-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: rgba(0, 0, 0, 0.85);
+    justify-content: center;
+    align-items: center;
+}
+.jscho-overlay.jscho-open {
+    display: flex;
+}
+.jscho-scroll-wrap {
+    width: 95vw;
+    height: 90vh;
+    overflow: auto;
+    display: flex;
+    justify-content: center;
+}
+.jscho-image {
+    display: block;
+    max-width: none;
+    height: auto;
+    width: auto;
+}
+.jscho-close {
+    position: absolute;
+    top: 0.5rem;
+    right: 1rem;
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 2.5rem;
+    cursor: pointer;
+    z-index: 10;
+    line-height: 1;
+    padding: 0.25rem 0.5rem;
+}
+.jscho-close:hover {
+    color: #f33;
+}
+
 /* Game page only: voice agent bottom-left (dashboard art has UI on the right) */
 .game-page .voice-agent-wrap {
     right: auto;
