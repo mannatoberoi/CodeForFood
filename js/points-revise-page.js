@@ -9,25 +9,9 @@ const QUESTION_LABEL = {
 
 const container = document.getElementById("revise-wrong-list");
 
-function addLine(text) {
-  if (!container) return;
-  const line = document.createElement("div");
-  line.className = "revise-line";
-  line.textContent = text;
-  container.appendChild(line);
-}
-
 function renderFromLocalStorage() {
   if (!container) return;
-  let answers = [];
-  try {
-    answers = JSON.parse(localStorage.getItem("quiz_run_answers") || "[]");
-  } catch (_) {}
-  const wrong = Array.isArray(answers) ? answers.filter((a) => a && a.correct === false) : [];
   container.innerHTML = "";
-  wrong.forEach((a) => {
-    addLine("chose " + String(a.choice || "?").toUpperCase());
-  });
 }
 
 (async function () {
@@ -58,8 +42,4 @@ function renderFromLocalStorage() {
   if (!wrong.length) {
     return;
   }
-
-  wrong.forEach((a) => {
-    addLine("chose " + String(a.choice || "?").toUpperCase());
-  });
 })();
