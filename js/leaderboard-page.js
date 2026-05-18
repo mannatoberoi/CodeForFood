@@ -1,6 +1,10 @@
 import "./voice-agent.js";
 import { getSupabase, isSupabaseConfigured } from "./supabase-client.js";
-import { fetchLeaderboard } from "./supabase-quiz.js";
+import {
+  fetchLeaderboard,
+  readLocalCompletedQuizMarks,
+  syncQuizRunIfLoggedIn,
+} from "./supabase-quiz.js";
 
 const TOP_COUNT = 5;
 
@@ -78,6 +82,33 @@ function showLoading() {
   setStatus("", "info");
 }
 
+function applyLocalScoreOverride(rows, currentUsername) {
+  const localMarks = readLocalCompletedQuizMarks();
+  if (localMarks == null || !currentUsername) return rows;
+
+  const key = currentUsername.toLowerCase();
+  let found = false;
+  const updated = rows.map((row) => {
+    if ((row.username || "").toLowerCase() === key) {
+      found = true;
+      return { ...row, best_marks: localMarks };
+    }
+    return row;
+  });
+
+  if (!found) {
+    updated.push({ rank: 0, username: currentUsername, best_marks: localMarks });
+  }
+
+  updated.sort(
+    (a, b) =>
+      Number(b.best_marks) - Number(a.best_marks) ||
+      String(a.username).localeCompare(String(b.username))
+  );
+
+  return updated.map((row, index) => ({ ...row, rank: index + 1 }));
+}
+
 function renderRows(rows, currentUsername) {
   if (!list) return;
   list.classList.remove("leaderboard-list--loading");
@@ -110,10 +141,15 @@ function renderRows(rows, currentUsername) {
     return;
   }
 
+  const syncResult = await syncQuizRunIfLoggedIn();
   const [result, currentUsername] = await Promise.all([
     fetchLeaderboard(TOP_COUNT),
     getCurrentUsername(),
   ]);
+
+  if (syncResult.error) {
+    console.warn("Leaderboard score sync failed:", syncResult.error.message);
+  }
 
   if (result.error) {
     list.classList.remove("leaderboard-list--loading");
@@ -122,5 +158,6 @@ function renderRows(rows, currentUsername) {
     return;
   }
 
-  renderRows(result.rows, currentUsername);
+  const rows = applyLocalScoreOverride(result.rows, currentUsername);
+  renderRows(rows, currentUsername);
 })();

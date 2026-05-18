@@ -1,7 +1,24 @@
 import { getSupabase } from "./supabase-client.js";
 
 export const MARKS_PER_CORRECT = 10;
+export const QUIZ_QUESTION_COUNT = 3;
 const SYNC_FP_KEY = "quiz_results_synced_fp";
+
+export function computeQuizMarks(answers) {
+  if (!Array.isArray(answers)) return { correctCount: 0, marks: 0 };
+  const correctCount = answers.filter((a) => a && a.correct === true).length;
+  return { correctCount, marks: correctCount * MARKS_PER_CORRECT };
+}
+
+export function readLocalCompletedQuizMarks() {
+  try {
+    const answers = JSON.parse(localStorage.getItem("quiz_run_answers") || "[]");
+    if (!Array.isArray(answers) || answers.length < QUIZ_QUESTION_COUNT) return null;
+    return computeQuizMarks(answers).marks;
+  } catch {
+    return null;
+  }
+}
 
 export function quizFingerprintFromStorage() {
   try {
@@ -47,9 +64,6 @@ export async function syncQuizRunIfLoggedIn() {
   const fp = quizFingerprintFromStorage();
   if (!fp || fp === '{"r":[],"a":[]}') return { skipped: true, reason: "empty_quiz" };
 
-  const prev = sessionStorage.getItem(SYNC_FP_KEY);
-  if (prev === fp) return { skipped: true, reason: "already_synced" };
-
   let rewards;
   let answers;
   try {
@@ -59,8 +73,11 @@ export async function syncQuizRunIfLoggedIn() {
     return { skipped: true, reason: "parse_error" };
   }
 
-  const correctCount = Array.isArray(rewards) ? rewards.length : 0;
-  const marks = correctCount * MARKS_PER_CORRECT;
+  if (!Array.isArray(answers) || answers.length < QUIZ_QUESTION_COUNT) {
+    return { skipped: true, reason: "incomplete_quiz" };
+  }
+
+  const { correctCount, marks } = computeQuizMarks(answers);
 
   try {
     await ensureProfile(supabase, user);
@@ -68,27 +85,39 @@ export async function syncQuizRunIfLoggedIn() {
     return { skipped: false, error: e instanceof Error ? e : new Error(String(e)) };
   }
 
-  const { error: runErr } = await supabase.from("quiz_runs").insert({
-    user_id: user.id,
-    marks,
-    correct_count: correctCount,
-    answers,
-    rewards,
-  });
-  if (runErr) return { skipped: false, error: new Error(runErr.message) };
+  const prev = sessionStorage.getItem(SYNC_FP_KEY);
+  const shouldInsertRun = prev !== fp;
 
-  if (Array.isArray(rewards) && rewards.length > 0) {
-    const rows = rewards.map((key) => ({
+  if (shouldInsertRun) {
+    const { error: runErr } = await supabase.from("quiz_runs").insert({
       user_id: user.id,
-      reward_key: key,
-    }));
-    const { error: rwErr } = await supabase.from("user_rewards").upsert(rows, {
-      onConflict: "user_id,reward_key",
+      marks,
+      correct_count: correctCount,
+      answers,
+      rewards,
     });
-    if (rwErr) return { skipped: false, error: new Error(rwErr.message) };
+    if (runErr) return { skipped: false, error: new Error(runErr.message) };
+
+    if (Array.isArray(rewards) && rewards.length > 0) {
+      const rows = rewards.map((key) => ({
+        user_id: user.id,
+        reward_key: key,
+      }));
+      const { error: rwErr } = await supabase.from("user_rewards").upsert(rows, {
+        onConflict: "user_id,reward_key",
+      });
+      if (rwErr) return { skipped: false, error: new Error(rwErr.message) };
+    }
+
+    sessionStorage.setItem(SYNC_FP_KEY, fp);
   }
 
-  sessionStorage.setItem(SYNC_FP_KEY, fp);
+  const { error: profileErr } = await supabase
+    .from("profiles")
+    .update({ latest_marks: marks, updated_at: new Date().toISOString() })
+    .eq("id", user.id);
+  if (profileErr) return { skipped: false, error: new Error(profileErr.message) };
+
   return { skipped: false, ok: true, marks };
 }
 

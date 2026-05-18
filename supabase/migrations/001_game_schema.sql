@@ -11,6 +11,7 @@ CREATE TABLE IF NOT EXISTS public.profiles (
   id UUID PRIMARY KEY REFERENCES auth.users (id) ON DELETE CASCADE,
   email TEXT NOT NULL DEFAULT '',
   username TEXT NOT NULL DEFAULT 'player',
+  latest_marks INTEGER NOT NULL DEFAULT 0 CHECK (latest_marks >= 0 AND latest_marks <= 30),
   created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
   updated_at TIMESTAMPTZ NOT NULL DEFAULT now()
 );
@@ -72,7 +73,7 @@ CREATE TRIGGER on_auth_user_created
 -- If the line above errors in your project, try: EXECUTE PROCEDURE public.handle_new_user();
 
 -- ---------------------------------------------------------------------------
--- Leaderboard: best single-quiz marks per user (top N). Callable by anyone.
+-- Leaderboard: latest quiz marks stored on profiles (10 pts per correct answer).
 -- ---------------------------------------------------------------------------
 CREATE OR REPLACE FUNCTION public.get_leaderboard(limit_count integer DEFAULT 10)
 RETURNS TABLE(rank integer, username text, best_marks integer)
@@ -81,17 +82,12 @@ STABLE
 SECURITY DEFINER
 SET search_path = public
 AS $$
-  SELECT (ROW_NUMBER() OVER (ORDER BY s.best_marks DESC))::integer AS rank,
-         s.username,
-         s.best_marks::integer
-  FROM (
-    SELECT p.username AS username,
-           MAX(q.marks)::integer AS best_marks
-    FROM public.profiles p
-    INNER JOIN public.quiz_runs q ON q.user_id = p.id
-    GROUP BY p.id, p.username
-  ) s
-  ORDER BY s.best_marks DESC
+  SELECT (ROW_NUMBER() OVER (ORDER BY p.latest_marks DESC, p.username ASC))::integer AS rank,
+         p.username,
+         p.latest_marks::integer AS best_marks
+  FROM public.profiles p
+  WHERE p.latest_marks > 0
+  ORDER BY p.latest_marks DESC, p.username ASC
   LIMIT COALESCE(limit_count, 10);
 $$;
 

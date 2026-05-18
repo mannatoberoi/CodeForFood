@@ -1892,25 +1892,36 @@ body.rewards-page .rewards-grid {
     margin-top: 2rem;
 }
 
-/* pages/leaderboard.html — layout locked to leaderboard-main.png (1672×941) */
-body.leaderboard-page {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-    min-height: 100dvh;
-    margin: 0;
+html:has(body.leaderboard-page) {
     overflow: hidden;
+}
+
+/* pages/leaderboard.html — full-bleed art (percent positions tuned vs cover) */
+body.leaderboard-page {
+    height: 100vh;
+    height: 100dvh;
+    max-height: 100vh;
+    max-height: 100dvh;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    overscroll-behavior: none;
     background-color: #2d2419;
+    background-image: url("../assets/images/leaderboard-main.png");
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
     color: #2c1810;
 }
 
 .leaderboard-stage {
     position: relative;
-    width: min(100vw, calc(100dvh * 1672 / 941));
-    height: min(100dvh, calc(100vw * 941 / 1672));
-    background: url("../assets/images/leaderboard-main.png") center / 100% 100% no-repeat;
-    flex-shrink: 0;
+    height: 100%;
+    min-height: 0;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background: transparent;
     container-type: size;
 }
 
@@ -1944,8 +1955,8 @@ body.leaderboard-page {
     position: absolute;
     left: 21%;
     right: 21%;
-    top: 40.2%;
-    bottom: 25%;
+    top: 43.5%;
+    bottom: 23%;
     z-index: 20;
     pointer-events: none;
 }
